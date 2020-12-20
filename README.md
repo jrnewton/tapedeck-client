@@ -1,2 +1,3 @@
 # tapedeck-client
-Vue UI for tapedeck
+
+Vue UI for [tapedeck](https://github.com/jrnewton/tapedeck).
