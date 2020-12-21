@@ -1,6 +1,3 @@
-import Vue from 'vue';
-import axios from 'axios';
-
 Vue.createApp({
   data() {
     return {

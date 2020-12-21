@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 Vue.createApp({
   data() {
     return {
