@@ -4,8 +4,5 @@ orbs:
 workflows:
   test:
     jobs:
-      - cypress/run:
-          start: npm start
-          wait-on: 'http://localhost:9001'
-          record: true
+      - node/test
           
