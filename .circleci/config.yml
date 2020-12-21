@@ -10,3 +10,4 @@ workflows:
           start: npm start
           wait-on: 'http://localhost:9001'
           record: true
+          
