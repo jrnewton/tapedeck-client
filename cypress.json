@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:9001",
   "projectId": "tapedeck-client",
-  "video": false
+  "video": false,
+  "defaultCommandTimeout": 1000
 }
