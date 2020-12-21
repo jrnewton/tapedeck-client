@@ -1,10 +1,8 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1.26.0
-# Orchestrate or schedule a set of jobs
 workflows:
   test:
-    # Run the welcome/run job in its own container
     jobs:
       - cypress/run:
           start: npm start
