@@ -5,7 +5,7 @@
   "scripts": {
     "start": "DEBUG=tapedeck:* nodemon",
     "lint": "eslint",
-    "test": "cypress"
+    "test": "cypress run"
   },
   "license": "MIT",
   "dependencies": {
