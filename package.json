@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "./bin/server.js",
   "scripts": {
-    "start": "DEBUG=tapedeck:* nodemon"
+    "start": "DEBUG=tapedeck:* nodemon",
+    "lint": "eslint"
   },
   "license": "MIT",
   "dependencies": {
@@ -12,6 +13,12 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-vue": "^7.3.0",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
   }
 }
