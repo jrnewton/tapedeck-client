@@ -1,17 +1,15 @@
 {
   "name": "tapedeck-ui",
   "version": "1.0.0",
-  "main": "./bin/server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "DEBUG=tapedeck:* nodemon",
+    "start": "ws --directory src -p 9001",
     "lint": "eslint",
-    "test": "cypress run"
+    "test": "npm run start & npx wait-on http://localhost:9001 & npx cypress run"
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.0",
-    "debug": "^4.3.1",
-    "express": "^4.17.1"
+    "axios": "^0.21.0"
   },
   "devDependencies": {
     "cypress": "^6.1.0",
@@ -19,7 +17,7 @@
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-vue": "^7.3.0",
-    "nodemon": "^2.0.6",
+    "local-web-server": "^4.2.1",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3",
     "wait-on": "^5.2.0"
