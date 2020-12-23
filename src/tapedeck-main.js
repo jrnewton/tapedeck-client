@@ -7,7 +7,12 @@ Vue.createApp({
     };
   },
   methods: {
-    async test() {
+    async archiveSubmit() {
+      if (this.archiveURL === '') {
+        alert('Please enter a URL to archive');
+        return;
+      }
+
       try {
         //TODO: add real URL once auth is in place
         const res = await axios.get('lambda-url');
@@ -15,22 +20,6 @@ Vue.createApp({
       } catch (error) {
         console.log(error);
       }
-    },
-    archiveSubmit() {
-      if (this.email === '') {
-        alert('Please enter your email address');
-        return;
-      }
-
-      if (this.archiveURL === '') {
-        alert('Please enter a URL to archive');
-        return;
-      }
-
-      //TODO: call faas
-      alert(
-        `Thanks! We'll email you at ${this.email} when the archive is available`
-      );
       this.archiveURL = '';
     }
   },
