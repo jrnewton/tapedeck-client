@@ -52,6 +52,7 @@ Vue.createApp({
         this.currentUser = user;
         console.log('currentUser set to', this.currentUser);
         window.location.href = '/auth-confirm.html';
+        console.log('redirected to auth confirm page');
       } catch (error) {
         console.log('signUp error', error);
       }
