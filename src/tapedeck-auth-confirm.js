@@ -46,9 +46,11 @@ Vue.createApp({
           this.code
         );
         console.log('confirm result', result);
+        window.location.href = '/';
       } catch (error) {
         console.log('confirm error', error);
       }
+
       console.log('confirm returning');
     }
   }
