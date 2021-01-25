@@ -10,9 +10,10 @@
     "test": "npm run serve & npx wait-on http://localhost:8080 & npx cypress run"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0",
-    "axios": "^0.21.1"
+    "eslint-plugin-cypress": "^2.11.2",
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -34,16 +35,18 @@
       "es2017": true,
       "browser": true,
       "node": true,
-      "cypress": true
+      "cypress/globals": true
     },
     "plugins": [
       "vue",
-      "prettier"
+      "prettier",
+      "cypress"
     ],
     "extends": [
       "eslint:recommended",
       "plugin:vue/vue3-essential",
-      "prettier"
+      "prettier",
+      "plugin:cypress/recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
@@ -55,7 +58,8 @@
     },
     "ignorePatterns": [
       "node_modules/",
-      "types/"
+      "types/",
+      "src/old/"
     ]
   },
   "browserslist": [
