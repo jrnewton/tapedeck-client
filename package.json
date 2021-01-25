@@ -27,7 +27,8 @@
     "env": {
       "es2017": true,
       "browser": true,
-      "node": true
+      "node": true,
+      "cypress": true
     },
     "plugins": [
       "vue",
