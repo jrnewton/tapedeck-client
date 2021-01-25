@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style>
-@import './assets/sketchy.min.css';
+@import '../../assets/sketchy.min.css';
 
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -20,6 +20,7 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "cypress": "^6.1.0",
     "eslint": "^7.16.0",
@@ -45,6 +46,7 @@
     "extends": [
       "eslint:recommended",
       "plugin:vue/vue3-essential",
+      "@vue/prettier",
       "prettier",
       "plugin:cypress/recommended"
     ],
