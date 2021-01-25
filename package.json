@@ -58,7 +58,7 @@
     },
     "ignorePatterns": [
       "node_modules/",
-      "types/",
+      "dist/",
       "src/old/"
     ]
   },

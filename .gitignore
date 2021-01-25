@@ -1,4 +1,5 @@
 node_modules
+dist
 *.swp
 node_trace.1.log
 out
