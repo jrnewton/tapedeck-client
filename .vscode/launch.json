@@ -1,0 +1,10 @@
+{
+  "configurations": [
+    {
+      "type": "pwa-chrome",
+      "name": "Vue",
+      "request": "launch",
+      "url": "http://localhost:8080/auth.html"
+    }
+  ]
+}
