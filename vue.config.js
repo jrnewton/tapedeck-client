@@ -14,5 +14,8 @@ module.exports = {
       title: 'Tape Deck - Your Archives',
       filename: 'archives.html'
     }
+  },
+  configureWebpack: {
+    devtool: 'source-map'
   }
 };
