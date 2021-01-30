@@ -7,7 +7,6 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "npm run serve & npx wait-on http://localhost:8080 & npx cypress run",
-    "#kill": "npm run serve will hang and leave the port occupied",
     "kill": "pgrep -f \"vue-cli-service\" | xargs kill"
   },
   "dependencies": {
