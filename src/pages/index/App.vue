@@ -172,6 +172,7 @@
             <input
               type="text"
               class="form-control form-control-lg"
+              :class="{ 'is-invalid': archiveUrlInvalid }"
               id="captureURLInput"
               aria-describedby="captureURLHelp"
               placeholder="URL to archive"
@@ -229,6 +230,7 @@ export default {
       status: '',
       username: '',
       password: '',
+      archiveUrlInvalid: false,
       code: null,
       currentUser: null,
       showOverlay: false,
@@ -303,9 +305,11 @@ export default {
     },
     async archiveSubmit() {
       if (this.archiveURL === '') {
-        alert('Please enter a URL to archive');
+        this.archiveUrlInvalid = true;
         return;
       }
+
+      this.archiveUrlInvalid = false;
 
       if (this.currentUser === null) {
         this.overlayContent = 'login';
