@@ -1,5 +1,6 @@
 <template>
-  <div id="tapedeck-auth">
+  <div id="tapedeck-auth" class="jumbotron m-0 m-sm-3 m-lg-5">
+    <h3 class="display-3">Create a new account</h3>
     <form id="capture-form" @submit.prevent="signup">
       <div class="form-group">
         <div class="my-3">
@@ -8,7 +9,7 @@
             class="form-control form-control-lg"
             id="emailInput"
             aria-describedby="emailHelp"
-            placeholder="Your email"
+            placeholder="Email"
             v-model="email"
           />
           <small id="emailHelp" class="form-text text-muted"
@@ -21,7 +22,7 @@
             class="form-control form-control-lg"
             id="usernameInput"
             aria-describedby="usernameHelp"
-            placeholder="Enter a username"
+            placeholder="Username"
             v-model="username"
           />
           <small id="usernameHelp" class="form-text text-muted"
@@ -34,7 +35,7 @@
             class="form-control form-control-lg"
             id="passwordInput"
             aria-describedby="passwordHelp"
-            placeholder="Enter a password"
+            placeholder="Password"
             v-model="password"
           />
           <small id="passwordHelp" class="form-text text-muted"
@@ -48,7 +49,7 @@
           role="button"
           type="submit"
         >
-          Sign Up
+          Create
         </button>
       </div>
     </form>

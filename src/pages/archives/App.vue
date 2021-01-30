@@ -3,7 +3,7 @@
     <section class="jumbotron m-0 m-sm-3 m-lg-5">
       <div class="row d-none d-sm-inline">
         <div class="col-12">
-          <h1 class="display-3">Tape Deck Archives</h1>
+          <h3 class="display-3">Tape Deck Archives</h3>
         </div>
       </div>
 

@@ -8,6 +8,7 @@
         <p class="lead">Record radio streams to the cloud</p>
       </div>
 
+      <!--
       <aside class="card col-12 col-lg-4 d-none d-sm-block">
         <div class="card-body">
           <h4 class="card-title">About</h4>
@@ -21,6 +22,7 @@
           >
         </div>
       </aside>
+      -->
     </div>
 
     <hr class="my-4" />
@@ -93,8 +95,11 @@
         >
       </p>
     </div>
-    <footer class="d-block d-sm-none">
-      <a href="https://github.com/jrnewton/tapedeck">View the code on GitHub</a>
+    <footer>
+      <!-- class="d-block d-sm-none" -->
+      <a href="https://github.com/jrnewton/tapedeck-client"
+        >View the code on GitHub</a
+      >
     </footer>
   </section>
 </template>

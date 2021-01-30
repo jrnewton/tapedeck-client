@@ -1,5 +1,6 @@
 <template>
-  <div id="tapedeck-auth">
+  <div id="tapedeck-auth" class="jumbotron m-0 m-sm-3 m-lg-5">
+    <h1 class="display-3">Login</h1>
     <form id="capture-form" @submit.prevent="signin">
       <div class="form-group">
         <div class="my-3">

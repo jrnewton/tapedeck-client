@@ -1,22 +1,29 @@
 <template>
-  <div id="tapedeck-auth-confirm">
+  <div id="tapedeck-auth-confirm" class="jumbotron m-0 m-sm-3 m-lg-5">
+    <h3 class="display-3">Confirm your account</h3>
     <form id="capture-form" @submit.prevent="confirm">
       <input
         type="text"
         class="form-control form-control-lg"
         id="usernameInput"
         aria-describedby="usernameHelp"
-        placeholder="Enter a username"
+        placeholder="Username"
         v-model="username"
       />
+      <small id="usernameHelp" class="form-text text-muted"
+        >Enter your username</small
+      >
       <input
         type="text"
         class="form-control form-control-lg"
         id="codeInput"
         aria-describedby="codeHelp"
-        placeholder="Enter your confirmation code"
+        placeholder="Confirmation code"
         v-model="code"
       />
+      <small id="codeHelp" class="form-text text-muted"
+        >Enter your confirmation code</small
+      >
       <button
         name="confirmButton"
         class="btn btn-primary btn-lg my-3"
@@ -24,7 +31,7 @@
         role="button"
         type="submit"
       >
-        Confirm Your Account
+        Confirm
       </button>
     </form>
   </div>
