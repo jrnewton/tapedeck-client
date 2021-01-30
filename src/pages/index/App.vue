@@ -45,28 +45,20 @@
           <button
             name="loginButton"
             class="btn btn-primary btn-lg my-2"
-            href="#"
             role="button"
             type="submit"
           >
             Login
           </button>
 
-          <a
-            href="#"
-            @click="overlayContent = 'signup'"
-            class="my-2 mx-2"
-            data-cy="createAccountButton"
-            >Create an account</a
+          <button
+            name="cancelButton"
+            class="btn btn-primary btn-lg my-2 mx-2"
+            role="button"
+            @click="overlayClose"
           >
-
-          <a
-            href="#"
-            @click="overlayContent = 'confirm'"
-            class="my-2 mx-2"
-            data-cy="confirmAccountButton"
-            >Enter code</a
-          >
+            Cancel
+          </button>
         </div>
       </form>
 
@@ -124,6 +116,15 @@
           >
             Create
           </button>
+
+          <button
+            name="cancelButton"
+            class="btn btn-primary btn-lg my-2 mx-2"
+            role="button"
+            @click="overlayClose"
+          >
+            Cancel
+          </button>
         </div>
       </form>
 
@@ -156,12 +157,21 @@
         >
         <button
           name="confirmButton"
-          class="btn btn-primary btn-lg my-3"
+          class="btn btn-primary btn-lg my-2"
           href="#"
           role="button"
           type="submit"
         >
           Confirm
+        </button>
+
+        <button
+          name="cancelButton"
+          class="btn btn-primary btn-lg my-2 mx-2"
+          role="button"
+          @click="overlayClose"
+        >
+          Cancel
         </button>
       </form>
     </section>
@@ -191,12 +201,20 @@
           >
             Archive Now
           </button>
-
-          <span>{{ status }}</span>
+          <a
+            class="btn btn-outline-info btn-lg my-2 mx-3"
+            data-cy="yourArchivesButton"
+            href="archives.html"
+            role="button"
+            >Your Archives</a
+          >
         </div>
+        <p>
+          {{ status }}
+        </p>
       </form>
     </section>
-    <aside>
+    <!-- <aside>
       <p class="lead">
         <a
           class="btn btn-outline-info btn-lg my-2"
@@ -206,7 +224,7 @@
           >Your Archives</a
         >
       </p>
-    </aside>
+    </aside> -->
     <footer>
       <!-- class="d-block d-sm-none" -->
       <a href="https://github.com/jrnewton/tapedeck-client"
