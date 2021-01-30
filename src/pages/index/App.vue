@@ -1,143 +1,21 @@
 <template>
-  <section class="jumbotron m-0 m-sm-3 m-lg-5">
-    <div class="row">
+  <main class="jumbotron m-0 m-sm-3 m-lg-5">
+    <header class="row">
       <div class="col-12 col-lg-8">
         <h1 class="display-3">
           <span class="d-none d-sm-inline">Welcome to</span> Tape Deck
         </h1>
         <p class="lead">Record radio streams to the cloud</p>
       </div>
-    </div>
-
-    <hr class="my-4" />
-
-    <div id="main">
-      <teleport to="#overlay">
-        <div id="overlayarea" @click="overlayClose"></div>
-        <dialog open v-if="showOverlay">
-          <form
-            id="login-form"
-            @submit.prevent="signin"
-            v-if="overlayContent === 'login'"
-          >
-            <div class="form-group">
-              <div class="my-3">
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  id="usernameInput"
-                  aria-describedby="usernameHelp"
-                  placeholder="Username"
-                  v-model="username"
-                />
-                <small id="usernameHelp" class="form-text text-muted"
-                  >Enter your username</small
-                >
-              </div>
-              <div class="my-3">
-                <input
-                  type="password"
-                  class="form-control form-control-lg"
-                  id="passwordInput"
-                  aria-describedby="passwordHelp"
-                  placeholder="Password"
-                  v-model="password"
-                />
-                <small id="passwordHelp" class="form-text text-muted"
-                  >Enter your password</small
-                >
-              </div>
-
-              <button
-                name="loginButton"
-                class="btn btn-primary btn-lg my-3"
-                href="#"
-                role="button"
-                type="submit"
-              >
-                Login
-              </button>
-
-              <a
-                href="#"
-                @click="overlayContent = 'signup'"
-                class="my-3 mx-3"
-                data-cy="createAccountButton"
-                >Create an account</a
-              >
-
-              <a
-                href="#"
-                @click="overlayContent = 'confirm'"
-                class="my-3 mx-3"
-                data-cy="confirmAccountButton"
-                >Enter code</a
-              >
-            </div>
-          </form>
-
-          <form
-            id="signup-form"
-            @submit.prevent="signup"
-            v-if="overlayContent === 'signup'"
-          >
-            <div class="form-group">
-              <div class="my-3">
-                <input
-                  type="email"
-                  class="form-control form-control-lg"
-                  id="emailInput"
-                  aria-describedby="emailHelp"
-                  placeholder="Email"
-                  v-model="email"
-                />
-                <small id="emailHelp" class="form-text text-muted"
-                  >Enter your email address</small
-                >
-              </div>
-              <div class="my-3">
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  id="usernameInput"
-                  aria-describedby="usernameHelp"
-                  placeholder="Username"
-                  v-model="username"
-                />
-                <small id="usernameHelp" class="form-text text-muted"
-                  >Enter your desired username</small
-                >
-              </div>
-              <div class="my-3">
-                <input
-                  type="password"
-                  class="form-control form-control-lg"
-                  id="passwordInput"
-                  aria-describedby="passwordHelp"
-                  placeholder="Password"
-                  v-model="password"
-                />
-                <small id="passwordHelp" class="form-text text-muted"
-                  >Enter your desired password</small
-                >
-              </div>
-              <button
-                name="signupButton"
-                class="btn btn-primary btn-lg my-3"
-                href="#"
-                role="button"
-                type="submit"
-              >
-                Create
-              </button>
-            </div>
-          </form>
-
-          <form
-            id="confirm-form"
-            @submit.prevent="confirm"
-            v-if="overlayContent === 'confirm'"
-          >
+    </header>
+    <section id="auth" v-if="showOverlay">
+      <form
+        id="login-form"
+        @submit.prevent="signin"
+        v-if="overlayContent === 'login'"
+      >
+        <div class="form-group">
+          <div class="my-2">
             <input
               type="text"
               class="form-control form-control-lg"
@@ -149,33 +27,148 @@
             <small id="usernameHelp" class="form-text text-muted"
               >Enter your username</small
             >
+          </div>
+          <div class="my-2">
+            <input
+              type="password"
+              class="form-control form-control-lg"
+              id="passwordInput"
+              aria-describedby="passwordHelp"
+              placeholder="Password"
+              v-model="password"
+            />
+            <small id="passwordHelp" class="form-text text-muted"
+              >Enter your password</small
+            >
+          </div>
+
+          <button
+            name="loginButton"
+            class="btn btn-primary btn-lg my-2"
+            href="#"
+            role="button"
+            type="submit"
+          >
+            Login
+          </button>
+
+          <a
+            href="#"
+            @click="overlayContent = 'signup'"
+            class="my-2 mx-2"
+            data-cy="createAccountButton"
+            >Create an account</a
+          >
+
+          <a
+            href="#"
+            @click="overlayContent = 'confirm'"
+            class="my-2 mx-2"
+            data-cy="confirmAccountButton"
+            >Enter code</a
+          >
+        </div>
+      </form>
+
+      <form
+        id="signup-form"
+        @submit.prevent="signup"
+        v-if="overlayContent === 'signup'"
+      >
+        <div class="form-group">
+          <div class="my-2">
+            <input
+              type="email"
+              class="form-control form-control-lg"
+              id="emailInput"
+              aria-describedby="emailHelp"
+              placeholder="Email"
+              v-model="email"
+            />
+            <small id="emailHelp" class="form-text text-muted"
+              >Enter your email address</small
+            >
+          </div>
+          <div class="my-2">
             <input
               type="text"
               class="form-control form-control-lg"
-              id="codeInput"
-              aria-describedby="codeHelp"
-              placeholder="Confirmation code"
-              v-model="code"
+              id="usernameInput"
+              aria-describedby="usernameHelp"
+              placeholder="Username"
+              v-model="username"
             />
-            <small id="codeHelp" class="form-text text-muted"
-              >Enter your confirmation code</small
+            <small id="usernameHelp" class="form-text text-muted"
+              >Enter your desired username</small
             >
-            <button
-              name="confirmButton"
-              class="btn btn-primary btn-lg my-3"
-              href="#"
-              role="button"
-              type="submit"
+          </div>
+          <div class="my-2">
+            <input
+              type="password"
+              class="form-control form-control-lg"
+              id="passwordInput"
+              aria-describedby="passwordHelp"
+              placeholder="Password"
+              v-model="password"
+            />
+            <small id="passwordHelp" class="form-text text-muted"
+              >Enter your desired password</small
             >
-              Confirm
-            </button>
-          </form>
-        </dialog>
-      </teleport>
+          </div>
+          <button
+            name="signupButton"
+            class="btn btn-primary btn-lg my-2"
+            href="#"
+            role="button"
+            type="submit"
+          >
+            Create
+          </button>
+        </div>
+      </form>
 
+      <form
+        id="confirm-form"
+        @submit.prevent="confirm"
+        v-if="overlayContent === 'confirm'"
+      >
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          id="usernameInput"
+          aria-describedby="usernameHelp"
+          placeholder="Username"
+          v-model="username"
+        />
+        <small id="usernameHelp" class="form-text text-muted"
+          >Enter your username</small
+        >
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          id="codeInput"
+          aria-describedby="codeHelp"
+          placeholder="Confirmation code"
+          v-model="code"
+        />
+        <small id="codeHelp" class="form-text text-muted"
+          >Enter your confirmation code</small
+        >
+        <button
+          name="confirmButton"
+          class="btn btn-primary btn-lg my-3"
+          href="#"
+          role="button"
+          type="submit"
+        >
+          Confirm
+        </button>
+      </form>
+    </section>
+    <section id="capture" v-else>
       <form id="capture-form" @submit.prevent="archiveSubmit">
         <div class="form-group">
-          <div class="my-3">
+          <div class="my-2">
             <input
               type="text"
               class="form-control form-control-lg"
@@ -190,7 +183,7 @@
           </div>
           <button
             name="captureURLButton"
-            class="btn btn-primary btn-lg my-3"
+            class="btn btn-primary btn-lg my-2"
             href="#"
             role="button"
             type="submit"
@@ -201,24 +194,25 @@
           <span>{{ status }}</span>
         </div>
       </form>
-
+    </section>
+    <aside>
       <p class="lead">
         <a
-          class="btn btn-outline-info btn-lg my-3"
+          class="btn btn-outline-info btn-lg my-2"
           data-cy="yourArchivesButton"
           href="archives.html"
           role="button"
           >Your Archives</a
         >
       </p>
-    </div>
+    </aside>
     <footer>
       <!-- class="d-block d-sm-none" -->
       <a href="https://github.com/jrnewton/tapedeck-client"
         >View the code on GitHub</a
       >
     </footer>
-  </section>
+  </main>
 </template>
 
 <script>
