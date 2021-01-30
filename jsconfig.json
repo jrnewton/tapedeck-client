@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+    }
+  },
+  "include": [ 
+    "./node_modules/cypress",
+    "./cypress/**/*.js",
+    "./src/**/*", "old/tapedeck-auth.js", "old/tapedeck-main.js", "old/tapedeck-playback.js", "old/tapedeck-auth-confirm.js", "old/tapedeck-archives.js", "old/amazon-cognito-identity.js"],
+  "exclude": ["node_modules", "dist"]
+}

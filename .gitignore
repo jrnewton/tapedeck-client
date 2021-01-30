@@ -4,3 +4,4 @@ node_modules
 node_trace.1.log
 out
 diff
+cypress/screenshots
