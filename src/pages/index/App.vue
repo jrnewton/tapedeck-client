@@ -1,5 +1,5 @@
 <template>
-  <main class="jumbotron m-0 m-sm-3 m-lg-5">
+  <main class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
     <header class="row">
       <div class="col-12 col-lg-8">
         <h1 class="display-3">
@@ -8,10 +8,10 @@
         <p class="lead">Record radio streams to the cloud</p>
       </div>
     </header>
-    <section id="auth" v-if="showOverlay">
+    <section id="auth" v-if="overlayEnabled">
       <form
         id="login-form"
-        @submit.prevent="signin"
+        @submit.prevent="login"
         v-if="overlayContent === 'login'"
       >
         <div class="form-group">
@@ -22,7 +22,7 @@
               id="usernameInput"
               aria-describedby="usernameHelp"
               placeholder="Username"
-              v-model="username"
+              v-model="formUsername"
             />
             <small id="usernameHelp" class="form-text text-muted"
               >Enter your username</small
@@ -35,7 +35,7 @@
               id="passwordInput"
               aria-describedby="passwordHelp"
               placeholder="Password"
-              v-model="password"
+              v-model="formPassword"
             />
             <small id="passwordHelp" class="form-text text-muted"
               >Enter your password</small
@@ -59,6 +59,10 @@
           >
             Cancel
           </button>
+
+          <a href="#" name="signupLink" @click="overlayContent = 'signup'"
+            >Create Account
+          </a>
         </div>
       </form>
 
@@ -75,7 +79,7 @@
               id="emailInput"
               aria-describedby="emailHelp"
               placeholder="Email"
-              v-model="email"
+              v-model="formEmail"
             />
             <small id="emailHelp" class="form-text text-muted"
               >Enter your email address</small
@@ -88,7 +92,7 @@
               id="usernameInput"
               aria-describedby="usernameHelp"
               placeholder="Username"
-              v-model="username"
+              v-model="formUsername"
             />
             <small id="usernameHelp" class="form-text text-muted"
               >Enter your desired username</small
@@ -101,7 +105,7 @@
               id="passwordInput"
               aria-describedby="passwordHelp"
               placeholder="Password"
-              v-model="password"
+              v-model="formPassword"
             />
             <small id="passwordHelp" class="form-text text-muted"
               >Enter your desired password</small
@@ -139,7 +143,7 @@
           id="usernameInput"
           aria-describedby="usernameHelp"
           placeholder="Username"
-          v-model="username"
+          v-model="formUsername"
         />
         <small id="usernameHelp" class="form-text text-muted"
           >Enter your username</small
@@ -150,7 +154,7 @@
           id="codeInput"
           aria-describedby="codeHelp"
           placeholder="Confirmation code"
-          v-model="code"
+          v-model="formConfirmationCode"
         />
         <small id="codeHelp" class="form-text text-muted"
           >Enter your confirmation code</small
@@ -158,7 +162,6 @@
         <button
           name="confirmButton"
           class="btn btn-primary btn-lg my-2"
-          href="#"
           role="button"
           type="submit"
         >
@@ -182,11 +185,11 @@
             <input
               type="text"
               class="form-control form-control-lg"
-              :class="{ 'is-invalid': archiveUrlInvalid }"
+              :class="{ 'is-invalid': formValidationURLError }"
               id="captureURLInput"
               aria-describedby="captureURLHelp"
               placeholder="URL to archive"
-              v-model="archiveURL"
+              v-model="formURL"
             />
             <small id="captureURLHelp" class="form-text text-muted"
               >Enter the URL of an mp3 or m3u file.</small
@@ -204,32 +207,45 @@
           <a
             class="btn btn-outline-info btn-lg my-2 mx-3"
             data-cy="yourArchivesButton"
-            href="archives.html"
+            href="#"
             role="button"
+            @click="enableArchives"
             >Your Archives</a
           >
         </div>
         <p>
-          {{ status }}
+          {{ progress }}
         </p>
       </form>
     </section>
-    <!-- <aside>
-      <p class="lead">
-        <a
-          class="btn btn-outline-info btn-lg my-2"
-          data-cy="yourArchivesButton"
-          href="archives.html"
-          role="button"
-          >Your Archives</a
-        >
-      </p>
-    </aside> -->
-    <footer>
-      <!-- class="d-block d-sm-none" -->
-      <a href="https://github.com/jrnewton/tapedeck-client"
-        >View the code on GitHub</a
+    <section id="archives" v-if="archivesEnabled">
+      <p class="lead">Recent recordings for {{ sessionData.email }}</p>
+
+      <div
+        class="card border-light mb-3"
+        style="max-width: 20rem"
+        v-for="item in recent"
+        :key="item.id"
       >
+        <div class="card-header">{{ item.desc }}</div>
+        <div class="card-body">
+          <!-- <h4 class="card-title">Light card title</h4> -->
+          <p class="card-text">
+            <audio controls ref="audio" preload="meta">
+              <source :src="item.url" type="audio/mpeg" />
+              <p>
+                Your browser does not support audio controls but you can
+                <a :href="item.url">download the file</a>
+                directly.
+              </p>
+            </audio>
+          </p>
+        </div>
+      </div>
+    </section>
+    <footer class="mt-3">
+      <!-- class="d-block d-sm-none" -->
+      <a href="https://github.com/jrnewton/tapedeck">About</a>
     </footer>
   </main>
 </template>
@@ -243,45 +259,82 @@ import config from '../../awsconfig';
 export default {
   data() {
     return {
-      email: '',
-      archiveURL: '',
-      status: '',
-      username: '',
-      password: '',
-      archiveUrlInvalid: false,
-      code: null,
-      currentUser: null,
-      showOverlay: false,
-      overlayContent: null //one of login, signup, confirm
+      //form data
+      formEmail: '',
+      formURL: '',
+      formUsername: '',
+      formPassword: '',
+      formConfirmationCode: null,
+      //validation and status
+      progress: '',
+      formValidationURLError: false,
+      //login data
+      loginFlowNextFunction: null,
+      sessionData: null,
+      //hidden UI sections
+      overlayEnabled: false,
+      overlayContent: null, //one of login, signup, confirm
+      archivesEnabled: false,
+      //dummy archive data
+      recent: [
+        {
+          id: 1,
+          desc: 'Test File',
+          url:
+            'https://tapedeck-sample-files.s3.us-east-2.amazonaws.com/test.mp3'
+        }
+      ]
     };
   },
   mounted() {
     Amplify.configure(config);
   },
   methods: {
+    setupLogin(fn) {
+      this.loginFlowNextFunction = fn;
+      this.overlayEnabled = true;
+      this.overlayContent = 'login';
+    },
     overlayClose() {
-      this.showOverlay = false;
+      this.overlayEnabled = false;
       this.overlayContent = null;
     },
-    async signin() {
-      console.log('calling signin');
+    populateSession(cognitoUser) {
+      this.sessionData = {};
+      this.sessionData.user = cognitoUser;
+      this.sessionData.username = cognitoUser.username;
+      this.sessionData.email = cognitoUser.attributes['email'];
+      this.sessionData.token =
+        cognitoUser.signInUserSession.accessToken.jwtToken;
+      // localStorage.setItem('email', this.sessionData.email);
+      console.log('sessionData set to', this.sessionData);
+    },
+    enableArchives() {
+      if (this.sessionData === null) {
+        this.setupLogin(this.enableArchives);
+        return;
+      }
+
+      this.archivesEnabled = true;
+    },
+    async login() {
+      console.log('calling login');
 
       try {
-        const params = {
-          username: this.username,
-          password: this.password
-        };
-        const { user } = await Auth.signIn(params);
-        console.log('signin result', user);
-        this.currentUser = user;
-        console.log('currentUser set to', this.currentUser);
+        const user = await Auth.signIn(this.formUsername, this.formPassword);
+        console.log('login result', user);
+        this.populateSession(user);
 
         this.overlayClose();
-        this.archiveSubmit();
+        if (this.loginFlowNextFunction) {
+          this.loginFlowNextFunction();
+        } else {
+          console.log('loginFlowNextFunction not defined');
+        }
 
         console.log('done');
       } catch (error) {
-        console.log('signin error', error);
+        console.log('login error', error);
       }
     },
     async signup() {
@@ -289,16 +342,15 @@ export default {
 
       try {
         const params = {
-          username: this.username,
-          password: this.password,
+          username: this.formUsername,
+          password: this.formPassword,
           attributes: {
             email: this.email
           }
         };
         const { user } = await Auth.signUp(params);
         console.log('signUp result', user);
-        this.currentUser = user;
-        console.log('currentUser set to', this.currentUser);
+        this.populateSession(user);
 
         this.overlayContent = 'confirm';
 
@@ -310,7 +362,10 @@ export default {
     async confirm() {
       console.log('confirm called');
       try {
-        const result = await Auth.confirmSignUp(this.username, this.code);
+        const result = await Auth.confirmSignUp(
+          this.formUsername,
+          this.formConfirmationCode
+        );
         console.log('confirm result', result);
 
         this.overlayClose();
@@ -322,22 +377,21 @@ export default {
       console.log('confirm returning');
     },
     async archiveSubmit() {
-      if (this.archiveURL === '') {
-        this.archiveUrlInvalid = true;
+      if (this.formURL === '') {
+        this.formValidationURLError = true;
         return;
       }
 
-      this.archiveUrlInvalid = false;
+      this.formValidationURLError = false;
 
-      if (this.currentUser === null) {
-        this.overlayContent = 'login';
-        this.showOverlay = true;
+      if (this.sessionData === null) {
+        this.setupLogin(this.archiveSubmit);
         return;
       }
 
-      this.status = 'Downloading ' + this.archiveURL;
+      this.progress = 'Downloading ' + this.formURL;
       setTimeout(() => {
-        this.status = null;
+        this.progress = null;
       }, 3000);
 
       // try {
@@ -348,7 +402,7 @@ export default {
       //   console.log(error);
       // }
 
-      this.archiveURL = '';
+      this.formURL = '';
     }
   }
 };
@@ -356,35 +410,4 @@ export default {
 
 <style>
 @import '../../assets/sketchy.min.css';
-
-/* #overlayarea {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
-  z-index: 10;
-} */
-
-dialog {
-  position: fixed;
-  top: 40vh;
-  left: 30%;
-  width: 40%;
-  z-index: 100;
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  dialog {
-    left: calc(50% - 20rem);
-    width: 40rem;
-  }
-}
 </style>
