@@ -229,7 +229,9 @@
       >
         <div class="card-header">{{ item.desc }}</div>
         <div class="card-body">
-          <!-- <h4 class="card-title">Light card title</h4> -->
+          <!-- <p class="card-title">
+            <a :href="item.url">{{ item.url }}</a>
+          </p> -->
           <p class="card-text">
             <audio controls ref="audio" preload="meta">
               <source :src="item.url" type="audio/mpeg" />
@@ -254,7 +256,7 @@
 //import axios from 'axios';
 import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
-import config from '../../awsconfig';
+import config from './awsconfig';
 
 export default {
   data() {
@@ -409,5 +411,5 @@ export default {
 </script>
 
 <style>
-@import '../../assets/sketchy.min.css';
+@import './assets/sketchy.min.css';
 </style>
