@@ -2,9 +2,11 @@
   <main class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
     <header class="row">
       <div class="col-12 col-lg-8">
-        <h1 class="display-3">
-          <span class="d-none d-sm-inline">Welcome to</span> Tape Deck
-        </h1>
+        <a href="/" style="text-decoration: none">
+          <h1 class="display-3">
+            <span class="d-none d-sm-inline">Welcome to</span> Tape Deck
+          </h1>
+        </a>
         <p class="lead">Record radio streams to the cloud</p>
       </div>
     </header>
