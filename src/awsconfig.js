@@ -16,3 +16,6 @@ export default {
   aws_user_pools_web_client_id: '4ngbb9lsqa61vq3dfc21c85k11',
   oauth: {}
 };
+
+export let apiEndpoint =
+  'https://9rxe670nh8.execute-api.us-east-2.amazonaws.com/dev/archive';

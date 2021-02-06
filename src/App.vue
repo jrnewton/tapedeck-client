@@ -245,7 +245,7 @@
 //import axios from 'axios';
 import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
-import config from './awsconfig';
+import config, { apiEndpoint } from './awsconfig';
 
 export default {
   data() {
@@ -294,9 +294,9 @@ export default {
       this.sessionData.user = cognitoUser;
       this.sessionData.username = cognitoUser.username;
       this.sessionData.email = cognitoUser.attributes['email'];
-      this.sessionData.token =
-        cognitoUser.signInUserSession.accessToken.jwtToken;
-      // localStorage.setItem('email', this.sessionData.email);
+      const cogSession = cognitoUser.getSignInUserSession();
+      this.sessionData.accessToken = cogSession.getAccessToken().getJwtToken();
+      this.sessionData.idToken = cogSession.getIdToken().getJwtToken();
       console.log('sessionData set to', this.sessionData);
     },
     showArchives() {
@@ -375,21 +375,35 @@ export default {
         return;
       }
 
-      this.archivesEnabled = false;
-      this.progress = 'Downloading ' + this.formURL;
-      setTimeout(() => {
-        this.progress = 'Done!';
-      }, 3000);
+      try {
+        const url = `${apiEndpoint}?accessToken=${this.sessionData.accessToken}`;
+        this.progress = 'Sending request for ' + this.formURL;
+        console.log('GET', url);
 
-      // try {
-      //   //TODO: add real URL once auth is in place
-      //   const res = await axios.get('https://www.google.com');
-      //   console.log(JSON.stringify(res));
-      // } catch (error) {
-      //   console.log(error);
-      // }
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            //prettier-ignore
+            'Authorization': this.sessionData.idToken
+          }
+        });
 
-      this.formURL = '';
+        console.log('GET response', response);
+
+        if (response.ok) {
+          this.progress = 'Done!';
+          setTimeout(() => {
+            this.progress = '';
+          }, 3000);
+          this.archivesEnabled = false;
+          this.formURL = '';
+        } else {
+          throw new Error(response.status + ': ' + response.statusText);
+        }
+      } catch (error) {
+        console.log('caught an error', error);
+        this.progress = error;
+      }
     }
   }
 };
