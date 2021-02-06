@@ -17,15 +17,15 @@
         <div class="form-group">
           <div class="my-2">
             <input
-              type="text"
+              type="email"
               class="form-control form-control-lg"
-              id="usernameInput"
-              aria-describedby="usernameHelp"
-              placeholder="Username"
-              v-model="formUsername"
+              id="emailInput"
+              aria-describedby="emailHelp"
+              placeholder="Email"
+              v-model="formEmail"
             />
-            <small id="usernameHelp" class="form-text text-muted"
-              >Enter your username</small
+            <small id="emailHelp" class="form-text text-muted"
+              >Enter your email address</small
             >
           </div>
           <div class="my-2">
@@ -87,19 +87,6 @@
           </div>
           <div class="my-2">
             <input
-              type="text"
-              class="form-control form-control-lg"
-              id="usernameInput"
-              aria-describedby="usernameHelp"
-              placeholder="Username"
-              v-model="formUsername"
-            />
-            <small id="usernameHelp" class="form-text text-muted"
-              >Enter your desired username</small
-            >
-          </div>
-          <div class="my-2">
-            <input
               type="password"
               class="form-control form-control-lg"
               id="passwordInput"
@@ -138,15 +125,15 @@
         v-if="overlayContent === 'confirm'"
       >
         <input
-          type="text"
+          type="email"
           class="form-control form-control-lg"
-          id="usernameInput"
-          aria-describedby="usernameHelp"
-          placeholder="Username"
-          v-model="formUsername"
+          id="emailInput"
+          aria-describedby="emailHelp"
+          placeholder="Email"
+          v-model="formEmail"
         />
-        <small id="usernameHelp" class="form-text text-muted"
-          >Enter your username</small
+        <small id="emailHelp" class="form-text text-muted"
+          >Enter your email address</small
         >
         <input
           type="text"
@@ -209,7 +196,7 @@
             data-cy="yourArchivesButton"
             href="#"
             role="button"
-            @click="enableArchives"
+            @click="showArchives"
             >Your Archives</a
           >
         </div>
@@ -262,16 +249,15 @@ export default {
   data() {
     return {
       //form data
-      formEmail: '',
       formURL: '',
-      formUsername: '',
+      formEmail: '',
       formPassword: '',
       formConfirmationCode: null,
       //validation and status
       progress: '',
       formValidationURLError: false,
       //login data
-      loginFlowNextFunction: null,
+      authFlowNext: null,
       sessionData: null,
       //hidden UI sections
       overlayEnabled: false,
@@ -293,7 +279,7 @@ export default {
   },
   methods: {
     setupLogin(fn) {
-      this.loginFlowNextFunction = fn;
+      this.authFlowNext = fn;
       this.overlayEnabled = true;
       this.overlayContent = 'login';
     },
@@ -311,29 +297,31 @@ export default {
       // localStorage.setItem('email', this.sessionData.email);
       console.log('sessionData set to', this.sessionData);
     },
-    enableArchives() {
+    showArchives() {
       if (this.sessionData === null) {
-        this.setupLogin(this.enableArchives);
+        this.setupLogin(this.showArchives);
         return;
       }
 
       this.archivesEnabled = true;
     },
+    completeAuth() {
+      this.overlayClose();
+
+      if (this.authFlowNext) {
+        this.authFlowNext();
+      } else {
+        console.log('authFlowNext not defined');
+      }
+    },
     async login() {
       console.log('calling login');
 
       try {
-        const user = await Auth.signIn(this.formUsername, this.formPassword);
+        const user = await Auth.signIn(this.formEmail, this.formPassword);
         console.log('login result', user);
         this.populateSession(user);
-
-        this.overlayClose();
-        if (this.loginFlowNextFunction) {
-          this.loginFlowNextFunction();
-        } else {
-          console.log('loginFlowNextFunction not defined');
-        }
-
+        this.completeAuth();
         console.log('done');
       } catch (error) {
         console.log('login error', error);
@@ -344,18 +332,16 @@ export default {
 
       try {
         const params = {
-          username: this.formUsername,
-          password: this.formPassword,
-          attributes: {
-            email: this.email
-          }
+          username: this.formEmail,
+          password: this.formPassword
+          // attributes: {
+          //   email: this.email
+          // }
         };
         const { user } = await Auth.signUp(params);
         console.log('signUp result', user);
-        this.populateSession(user);
-
+        //this.populateSession(user);
         this.overlayContent = 'confirm';
-
         console.log('redirected to auth confirm');
       } catch (error) {
         console.log('signUp error', error);
@@ -365,18 +351,14 @@ export default {
       console.log('confirm called');
       try {
         const result = await Auth.confirmSignUp(
-          this.formUsername,
+          this.formEmail,
           this.formConfirmationCode
         );
         console.log('confirm result', result);
-
-        this.overlayClose();
-        this.archiveSubmit();
+        this.completeAuth();
       } catch (error) {
         console.log('confirm error', error);
       }
-
-      console.log('confirm returning');
     },
     async archiveSubmit() {
       if (this.formURL === '') {
@@ -391,9 +373,10 @@ export default {
         return;
       }
 
+      this.archivesEnabled = false;
       this.progress = 'Downloading ' + this.formURL;
       setTimeout(() => {
-        this.progress = null;
+        this.progress = 'Done!';
       }, 3000);
 
       // try {
