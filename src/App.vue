@@ -168,7 +168,7 @@
       </form>
     </section>
     <section id="capture" v-else>
-      <form id="capture-form" @submit.prevent="archiveSubmit">
+      <form id="capture-form" @submit.prevent="archive">
         <div class="form-group">
           <div class="my-2">
             <input
@@ -297,7 +297,7 @@ export default {
       const cogSession = cognitoUser.getSignInUserSession();
       this.sessionData.accessToken = cogSession.getAccessToken().getJwtToken();
       this.sessionData.idToken = cogSession.getIdToken().getJwtToken();
-      console.log('sessionData set to', this.sessionData);
+      console.log('sessionData', this.sessionData);
     },
     showArchives() {
       if (this.sessionData === null) {
@@ -317,20 +317,20 @@ export default {
       }
     },
     async login() {
-      console.log('calling login');
+      console.log('login called');
 
       try {
         const user = await Auth.signIn(this.formEmail, this.formPassword);
         console.log('login result', user);
         this.populateSession(user);
         this.completeAuth();
-        console.log('done');
+        console.log('login done');
       } catch (error) {
         console.log('login error', error);
       }
     },
     async signup() {
-      console.log('calling signup');
+      console.log('signup called');
 
       try {
         const params = {
@@ -341,12 +341,12 @@ export default {
           // }
         };
         const { user } = await Auth.signUp(params);
-        console.log('signUp result', user);
+        console.log('signup result', user);
         //this.populateSession(user);
         this.overlayContent = 'confirm';
         console.log('redirected to auth confirm');
       } catch (error) {
-        console.log('signUp error', error);
+        console.log('signup error', error);
       }
     },
     async confirm() {
@@ -358,11 +358,14 @@ export default {
         );
         console.log('confirm result', result);
         this.completeAuth();
+        console.log('confirm done');
       } catch (error) {
         console.log('confirm error', error);
       }
     },
-    async archiveSubmit() {
+    async archive() {
+      console.log('archive called');
+
       if (this.formURL === '') {
         this.formValidationURLError = true;
         return;
@@ -371,14 +374,14 @@ export default {
       this.formValidationURLError = false;
 
       if (this.sessionData === null) {
-        this.setupLogin(this.archiveSubmit);
+        this.setupLogin(this.archive);
         return;
       }
 
       try {
         const url = `${apiEndpoint}?accessToken=${this.sessionData.accessToken}`;
         this.progress = 'Sending request for ' + this.formURL;
-        console.log('GET', url);
+        console.log('archive GET', url);
 
         const response = await fetch(url, {
           method: 'GET',
@@ -388,20 +391,26 @@ export default {
           }
         });
 
-        console.log('GET response', response);
+        console.log('archive response', response);
 
         if (response.ok) {
-          this.progress = 'Done!';
-          setTimeout(() => {
-            this.progress = '';
-          }, 3000);
+          const json = await response.json();
+          const returnMsg = json['body-json'];
+          console.log('archive response msg', returnMsg);
+          this.progress = returnMsg;
+          // this.progress = 'Done!';
+          // setTimeout(() => {
+          //   this.progress = '';
+          // }, 3000);
           this.archivesEnabled = false;
           this.formURL = '';
+          console.log('archive done');
         } else {
+          console.log('archive throwing error due to status');
           throw new Error(response.status + ': ' + response.statusText);
         }
       } catch (error) {
-        console.log('caught an error', error);
+        console.log('archive error', error);
         this.progress = error;
       }
     }
