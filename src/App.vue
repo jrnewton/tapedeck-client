@@ -1,4 +1,5 @@
 <template>
+  <!-- -->
   <main class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
     <header class="row">
       <div class="col-12 col-lg-8">
@@ -236,6 +237,7 @@
     </section>
     <footer class="mt-3">
       <!-- class="d-block d-sm-none" -->
+      Version: {{ appVersion }} -
       <a href="https://github.com/jrnewton/tapedeck">About</a>
     </footer>
   </main>
@@ -250,6 +252,8 @@ import config, { apiEndpoint } from './awsconfig';
 export default {
   data() {
     return {
+      //app meta
+      appVersion: process.env.VUE_APP_VERSION,
       //form data
       formURL: '',
       formEmail: '',
