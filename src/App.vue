@@ -391,7 +391,7 @@ export default {
       }
 
       try {
-        const url = `${apiEndpoint}?accessToken=${this.sessionData.accessToken}`;
+        const url = `${apiEndpoint}/archive?accessToken=${this.sessionData.accessToken}`;
         this.progress = 'Sending request for ' + this.formURL;
         console.log('archive GET', url);
 

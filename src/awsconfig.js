@@ -18,4 +18,4 @@ export default {
 };
 
 export let apiEndpoint =
-  'https://9rxe670nh8.execute-api.us-east-2.amazonaws.com/dev/archive';
+  'https://9rxe670nh8.execute-api.us-east-2.amazonaws.com/dev';
