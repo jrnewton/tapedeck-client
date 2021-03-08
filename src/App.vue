@@ -202,6 +202,14 @@
             @click="showArchives"
             >Your Archives</a
           >
+          <a
+            name="corsButton"
+            class="btn btn-primary btn-lg-my-2 mx-2"
+            role="button"
+            @click="corsTest"
+          >
+            CORS Test
+          </a>
         </div>
         <p>
           {{ progress }}
