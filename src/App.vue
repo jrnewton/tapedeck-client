@@ -185,6 +185,19 @@
               >Enter the URL of an mp3 or m3u file.</small
             >
           </div>
+          <div class="my-2">
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="captureDescInput"
+              aria-describedby="captureDescHelp"
+              placeholder="Description"
+              v-model="formDesc"
+            />
+            <small id="captureDescHelp" class="form-text text-muted"
+              >Enter a short description.</small
+            >
+          </div>
           <button
             name="captureURLButton"
             class="btn btn-primary btn-lg my-2"
@@ -202,14 +215,6 @@
             @click="showArchives"
             >Your Archives</a
           >
-          <a
-            name="corsButton"
-            class="btn btn-primary btn-lg-my-2 mx-2"
-            role="button"
-            @click="corsTest"
-          >
-            CORS Test
-          </a>
         </div>
         <p>
           {{ progress }}
@@ -264,6 +269,7 @@ export default {
       appVersion: process.env.VUE_APP_VERSION,
       //form data
       formURL: '',
+      formDesc: '',
       formEmail: '',
       formPassword: '',
       formConfirmationCode: null,
@@ -393,27 +399,28 @@ export default {
       try {
         const url = `${apiEndpoint}/archive?accessToken=${this.sessionData.accessToken}`;
         this.progress = 'Sending request for ' + this.formURL;
-        console.log('archive GET', url);
+        console.log('archive POST', url);
 
         const response = await fetch(url, {
-          method: 'GET',
+          method: 'POST',
           headers: {
             //prettier-ignore
-            'Authorization': this.sessionData.idToken
-          }
+            'Authorization': this.sessionData.idToken,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            url: this.formURL,
+            desc: this.formDesc
+          })
         });
 
         console.log('archive response', response);
 
         if (response.ok) {
           const json = await response.json();
-          const returnMsg = json['body-json'];
-          console.log('archive response msg', returnMsg);
-          this.progress = returnMsg;
-          // this.progress = 'Done!';
-          // setTimeout(() => {
-          //   this.progress = '';
-          // }, 3000);
+          console.log('archive response msg', json);
+          this.progress = json;
+
           this.archivesEnabled = false;
           this.formURL = '';
           console.log('archive done');
