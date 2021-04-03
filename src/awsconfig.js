@@ -1,4 +1,4 @@
-//taken from backend repo with amplify setup
+//default export taken from backend repo with amplify setup
 export default {
   //Not required:
   //aws_project_region: 'us-east-2',
@@ -17,5 +17,6 @@ export default {
   oauth: {}
 };
 
+//tack on some additional items
 export let apiEndpoint =
   'https://9rxe670nh8.execute-api.us-east-2.amazonaws.com/dev';
