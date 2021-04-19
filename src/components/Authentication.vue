@@ -1,13 +1,10 @@
 <template>
   <section id="auth">
-    <h1>auth required</h1>
-    {{ authFlow }}
+    <p>AuthFlow: {{ authFlow }}</p>
+    <p>FormUrl: {{ formUrl }}</p>
+    <p>FormDesc: {{ formDesc }}</p>
 
-    <!-- <form
-      id="login-form"
-      @submit.prevent="login"
-      v-if="authFlow === 'login'"
-    >
+    <form id="login-form" @submit.prevent="login" v-if="authFlow === 'login'">
       <div class="form-group">
         <div class="my-2">
           <input
@@ -45,25 +42,23 @@
           Login
         </button>
 
-        <button
+        <router-link
+          to="/"
           name="cancelButton"
           class="btn btn-primary btn-lg my-2 mx-2"
           role="button"
-          @click="overlayClose"
         >
           Cancel
-        </button>
+        </router-link>
 
-        <a href="#" name="signupLink" @click="authFlow = 'signup'"
-          >Create Account
-        </a>
+        <router-link to="/auth-create">Create Account</router-link>
       </div>
     </form>
 
     <form
-      id="signup-form"
-      @submit.prevent="signup"
-      v-if="authFlow === 'signup'"
+      id="create-form"
+      @submit.prevent="create"
+      v-if="authFlow === 'create'"
     >
       <div class="form-group">
         <div class="my-2">
@@ -93,7 +88,7 @@
           >
         </div>
         <button
-          name="signupButton"
+          name="createButton"
           class="btn btn-primary btn-lg my-2"
           href="#"
           role="button"
@@ -102,14 +97,14 @@
           Create
         </button>
 
-        <button
+        <router-link
+          to="/"
           name="cancelButton"
           class="btn btn-primary btn-lg my-2 mx-2"
           role="button"
-          @click="overlayClose"
         >
           Cancel
-        </button>
+        </router-link>
       </div>
     </form>
 
@@ -149,104 +144,72 @@
         Confirm
       </button>
 
-      <button
+      <router-link
+        to="/"
         name="cancelButton"
         class="btn btn-primary btn-lg my-2 mx-2"
         role="button"
-        @click="overlayClose"
       >
         Cancel
-      </button>
+      </router-link>
     </form>
-     -->
   </section>
 </template>
 
 <script>
-import config from './awsconfig.js';
-import Amplify from '@aws-amplify/core';
-import Auth from '@aws-amplify/auth';
-import store from '../store.js';
 import { mapGetters } from 'vuex';
 
-const populateSession = (cognitoUser) => {
-  const sessionData = {};
-  store.dispatch('sessionData', sessionData);
-
-  sessionData.user = cognitoUser;
-  sessionData.username = cognitoUser.username;
-  sessionData.email = cognitoUser.attributes['email'];
-  const cogSession = cognitoUser.getSignInUserSession();
-  sessionData.accessToken = cogSession.getAccessToken().getJwtToken();
-  sessionData.idToken = cogSession.getIdToken().getJwtToken();
-
-  store.dispatch('sessionData', sessionData);
-  console.log('sessionData', this.sessionData);
-};
-
 export default {
-  mounted() {
-    Amplify.configure(config);
-    console.log('Amplify configured');
-  },
   data() {
     return {
       formEmail: '',
       formPassword: '',
-      formConfirmationCode: null
+      formConfirmationCode: ''
     };
   },
   computed: {
-    ...mapGetters(['authFlow'])
+    ...mapGetters(['formUrl', 'formDesc'])
   },
+  props: ['authFlow'],
   methods: {
-    // beforeRouteEnter(to, from, next) {
-    //   if (!store.getters.authenticated) {
-    //   }
-    // },
     async login() {
       console.log('login called');
-
       try {
-        const user = await Auth.signIn(this.formEmail, this.formPassword);
-        console.log('login result', user);
-        populateSession(user);
-        store.dispatch('authFlow', 'complete');
-        console.log('login done');
+        const payload = {
+          formEmail: this.formEmail,
+          formPassword: this.formPassword
+        };
+        console.log(payload);
+        await this.$store.dispatch('login', payload);
+        this.$router.push('/capture');
       } catch (error) {
         console.log('login error', error);
       }
     },
-    async signup() {
-      console.log('signup called');
-
+    async create() {
+      console.log('create called');
       try {
-        const params = {
-          username: this.formEmail,
-          password: this.formPassword
-          // attributes: {
-          //   email: this.email
-          // }
+        const payload = {
+          formEmail: this.formEmail,
+          formPassword: this.formPassword
         };
-        const { user } = await Auth.signUp(params);
-        console.log('signup result', user);
-        //this.populateSession(user);
-        store.dispatch('authFlow', 'confirm');
-        console.log('redirected to auth confirm');
+        console.log(payload);
+        await this.$store.dispatch('create', payload);
+        this.$router.push('/auth-confirm');
       } catch (error) {
-        console.log('signup error', error);
+        console.log('create error', error);
       }
     },
     async confirm() {
       console.log('confirm called');
       try {
-        const result = await Auth.confirmSignUp(
-          this.formEmail,
-          this.formConfirmationCode
-        );
-        console.log('confirm result', result);
-        store.dispatch('authFlow', 'complete');
-        console.log('confirm done');
+        const payload = {
+          formEmail: this.formEmail,
+          formConfirmationCode: this.formConfirmationCode
+        };
+        console.log(payload);
+        await this.$store.dispatch('confirm', payload);
+        this.$router.push('/capture');
       } catch (error) {
         console.log('confirm error', error);
       }

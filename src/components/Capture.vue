@@ -6,7 +6,7 @@
           <input
             type="text"
             class="form-control form-control-lg"
-            :class="{ 'is-invalid': formValidationURLError }"
+            :class="{ 'is-invalid': formURLInvalid }"
             id="captureURLInput"
             aria-describedby="captureURLHelp"
             placeholder="URL to archive"
@@ -20,6 +20,7 @@
           <input
             type="text"
             class="form-control form-control-lg"
+            :class="{ 'is-invalid': formDescInvalid }"
             id="captureDescInput"
             aria-describedby="captureDescHelp"
             placeholder="Description"
@@ -38,13 +39,13 @@
         >
           Archive Now
         </button>
-        <a
+
+        <router-link
+          to="/archives"
           class="btn btn-outline-info btn-lg my-2 mx-3"
           data-cy="yourArchivesButton"
-          href="#"
           role="button"
-          @click="showArchives"
-          >Your Archives</a
+          >Your Archives</router-link
         >
       </div>
       <p>
@@ -55,8 +56,6 @@
 </template>
 
 <script>
-import { apiEndpoint } from './awsconfig';
-
 export default {
   data() {
     return {
@@ -65,61 +64,32 @@ export default {
       formDesc: '',
       //validation and status
       progress: '',
-      formValidationURLError: false
+      formURLInvalid: false,
+      formDescInvalid: false
     };
   },
   methods: {
     async archive() {
       console.log('archive called');
 
+      this.formURLInvalid = false;
+      this.formDescInvalid = false;
+
       if (this.formURL === '') {
-        this.formValidationURLError = true;
+        this.formURLInvalid = true;
+      }
+
+      if (this.formDesc === '') {
+        this.formDescInvalid = true;
+      }
+
+      if (this.formURLInvalid || this.formDescInvalid) {
         return;
       }
 
-      this.formValidationURLError = false;
-
-      if (this.sessionData === null) {
-        this.setupLogin(this.archive);
-        return;
-      }
-
-      try {
-        const url = `${apiEndpoint}/archive?accessToken=${this.sessionData.accessToken}`;
-        this.progress = 'Sending request for ' + this.formURL;
-        console.log('archive POST', url);
-
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            //prettier-ignore
-            'Authorization': this.sessionData.idToken,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            url: this.formURL,
-            desc: this.formDesc
-          })
-        });
-
-        console.log('archive response', response);
-
-        if (response.ok) {
-          const json = await response.json();
-          console.log('archive response msg', json);
-          this.progress = json;
-
-          this.archivesEnabled = false;
-          this.formURL = '';
-          console.log('archive done');
-        } else {
-          console.log('archive throwing error due to status');
-          throw new Error(response.status + ': ' + response.statusText);
-        }
-      } catch (error) {
-        console.log('archive error', error);
-        this.progress = error;
-      }
+      this.$store.commit('formUrl', this.formURL);
+      this.$store.commit('formDesc', this.formDesc);
+      this.$router.push('/capture');
     }
   }
 };

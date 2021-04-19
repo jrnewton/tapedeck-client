@@ -33,9 +33,25 @@ const router = createRouter({
       }
     },
     {
-      name: 'auth',
-      path: '/auth',
+      name: 'auth-login',
+      path: '/auth-login',
       component: Authentication,
+      props: {
+        default: true,
+        authFlow: 'login'
+      },
+      meta: {
+        authRequired: false
+      }
+    },
+    {
+      name: 'auth-create',
+      path: '/auth-create',
+      component: Authentication,
+      props: {
+        default: true,
+        authFlow: 'create'
+      },
       meta: {
         authRequired: false
       }
@@ -44,6 +60,10 @@ const router = createRouter({
       name: 'auth-confirm',
       path: '/auth-confirm',
       component: Authentication,
+      props: {
+        default: true,
+        authFlow: 'confirm'
+      },
       meta: {
         authRequired: false
       }
@@ -62,14 +82,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log('Route guard / global / beforeEach');
+  console.log('Route guard:', from.name, '->', to.name);
 
   if (to.meta.authRequired === false) {
+    console.log('auth not required');
     next();
   } else {
+    console.log('auth required, redirect to auth with fromRoute=', from.name);
     //assume auth required for all other cases
     next({
-      name: 'auth',
+      name: 'auth-login',
       query: {
         fromRoute: from.name
       }

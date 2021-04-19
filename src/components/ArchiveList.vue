@@ -42,16 +42,6 @@ export default {
         }
       ]
     };
-  },
-  methods: {
-    showArchives() {
-      if (this.sessionData === null) {
-        this.setupLogin(this.showArchives);
-        return;
-      }
-
-      this.archivesEnabled = true;
-    }
   }
 };
 </script>
