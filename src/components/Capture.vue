@@ -8,7 +8,7 @@
           >
           <input
             type="text"
-            class="form-control form-control-lg"
+            class="form-control"
             :class="{ 'is-invalid': formURLInvalid }"
             id="captureURLInput"
             aria-describedby="captureURLHelp"
@@ -23,7 +23,7 @@
           >
           <input
             type="text"
-            class="form-control form-control-lg"
+            class="form-control"
             :class="{ 'is-invalid': formDescInvalid }"
             id="captureDescInput"
             aria-describedby="captureDescHelp"
@@ -32,22 +32,13 @@
         </div>
         <button
           name="captureURLButton"
-          class="btn btn-primary btn-lg my-2"
+          class="btn btn-info btn-lg my-2"
           href="#"
           role="button"
           type="submit"
         >
           Archive Now
         </button>
-
-        <router-link
-          to="/archives"
-          class="btn btn-outline-secondary btn-lg my-2 mx-3"
-          data-cy="yourArchivesButton"
-          role="button"
-          tag="button"
-          >Your Archives</router-link
-        >
       </div>
       <p>
         {{ status }}

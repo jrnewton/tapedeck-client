@@ -3,6 +3,8 @@ import Authentication from './components/Authentication.vue';
 import Capture from './components/Capture.vue';
 import ArchiveList from './components/ArchiveList.vue';
 import NotFound from './components/NotFound.vue';
+import Profile from './components/Profile.vue';
+import About from './components/About.vue';
 import store from './store.js';
 
 const router = createRouter({
@@ -23,6 +25,22 @@ const router = createRouter({
       component: ArchiveList,
       meta: {
         authRequired: true
+      }
+    },
+    {
+      name: 'profile',
+      path: '/profile',
+      component: Profile,
+      meta: {
+        authRequired: true
+      }
+    },
+    {
+      name: 'about',
+      path: '/about',
+      component: About,
+      meta: {
+        authRequired: false
       }
     },
     {
