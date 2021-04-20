@@ -1,5 +1,5 @@
 <template>
-  <section id="archives">
+  <section id="archives" role="region" aria-label="Your Recent Recordings">
     <p class="lead">Recent recordings for {{ sessionData.email }}</p>
 
     <div

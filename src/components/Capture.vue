@@ -1,34 +1,34 @@
 <template>
-  <section id="capture">
+  <section id="capture" role="region" aria-label="Archive a recording">
     <form id="capture-form" @submit.prevent="archive">
       <div class="form-group">
         <div class="my-2">
+          <label id="captureURLHelp" class="form-text text-info"
+            >Enter the URL of an mp3 or m3u file.</label
+          >
           <input
             type="text"
             class="form-control form-control-lg"
             :class="{ 'is-invalid': formURLInvalid }"
             id="captureURLInput"
             aria-describedby="captureURLHelp"
-            placeholder="URL to archive"
+            autocomplete="url"
             v-model="formURL"
           />
-          <small id="captureURLHelp" class="form-text text-muted"
-            >Enter the URL of an mp3 or m3u file.</small
-          >
         </div>
         <div class="my-2">
+          <label id="captureDescHelp" class="form-text text-info"
+            >Enter a short description that describes the content of the
+            URL.</label
+          >
           <input
             type="text"
             class="form-control form-control-lg"
             :class="{ 'is-invalid': formDescInvalid }"
             id="captureDescInput"
             aria-describedby="captureDescHelp"
-            placeholder="Description"
             v-model="formDesc"
           />
-          <small id="captureDescHelp" class="form-text text-muted"
-            >Enter a short description.</small
-          >
         </div>
         <button
           name="captureURLButton"
@@ -42,9 +42,10 @@
 
         <router-link
           to="/archives"
-          class="btn btn-outline-info btn-lg my-2 mx-3"
+          class="btn btn-outline-secondary btn-lg my-2 mx-3"
           data-cy="yourArchivesButton"
           role="button"
+          tag="button"
           >Your Archives</router-link
         >
       </div>

@@ -1,36 +1,37 @@
 <template>
-  <section id="auth">
-    <p>AuthFlow: {{ authFlow }}</p>
-
+  <section id="auth" role="region" aria-label="Authentication">
     <form id="login-form" @submit.prevent="login" v-if="authFlow === 'login'">
-      <div class="form-group">
+      <fieldset class="form-group" form="login-form">
+        <legend>Please login</legend>
         <div class="my-2">
+          <label id="emailHelp" class="form-text text-info" for="emailInput"
+            >Enter your email address</label
+          >
           <input
             type="email"
             class="form-control form-control-lg"
             id="emailInput"
             aria-describedby="emailHelp"
-            placeholder="Email"
+            autocomplete="email"
             v-model="formEmail"
           />
-          <small id="emailHelp" class="form-text text-muted"
-            >Enter your email address</small
-          >
         </div>
         <div class="my-2">
+          <label
+            id="passwordHelp"
+            class="form-text text-info"
+            for="passwordInput"
+            >Enter your password</label
+          >
           <input
             type="password"
             class="form-control form-control-lg"
             id="passwordInput"
             aria-describedby="passwordHelp"
-            placeholder="Password"
+            autocomplete="current-password"
             v-model="formPassword"
           />
-          <small id="passwordHelp" class="form-text text-muted"
-            >Enter your password</small
-          >
         </div>
-
         <button
           name="loginButton"
           class="btn btn-primary btn-lg my-2"
@@ -39,18 +40,16 @@
         >
           Login
         </button>
-
         <router-link
-          to="/"
-          name="cancelButton"
-          class="btn btn-primary btn-lg my-2 mx-2"
+          to="/auth-create"
+          name="newAccountButton"
+          class="btn btn-outline-secondary btn-lg my-2 mx-2"
           role="button"
+          tag="button"
         >
-          Cancel
+          New Account
         </router-link>
-
-        <router-link to="/auth-create">Create Account</router-link>
-      </div>
+      </fieldset>
     </form>
 
     <form
@@ -58,32 +57,36 @@
       @submit.prevent="create"
       v-if="authFlow === 'create'"
     >
-      <div class="form-group">
+      <fieldset class="form-group" form="create-form">
+        <legend>Create a new account</legend>
         <div class="my-2">
+          <label id="emailHelp" class="form-text text-info" for="emailInput"
+            >Enter your email address</label
+          >
           <input
             type="email"
             class="form-control form-control-lg"
             id="emailInput"
             aria-describedby="emailHelp"
-            placeholder="Email"
+            autocomplete="email"
             v-model="formEmail"
           />
-          <small id="emailHelp" class="form-text text-muted"
-            >Enter your email address</small
-          >
         </div>
         <div class="my-2">
+          <label
+            id="passwordHelp"
+            class="form-text text-info"
+            for="passwordInput"
+            >Enter your desired password</label
+          >
           <input
             type="password"
             class="form-control form-control-lg"
             id="passwordInput"
             aria-describedby="passwordHelp"
-            placeholder="Password"
+            autocomplete="new-password"
             v-model="formPassword"
           />
-          <small id="passwordHelp" class="form-text text-muted"
-            >Enter your desired password</small
-          >
         </div>
         <button
           name="createButton"
@@ -92,18 +95,19 @@
           role="button"
           type="submit"
         >
-          Create
+          Create new account
         </button>
 
         <router-link
-          to="/"
-          name="cancelButton"
-          class="btn btn-primary btn-lg my-2 mx-2"
+          to="/auth-confirm"
+          name="codeButton"
+          class="btn btn-outline-secondary btn-lg my-2 mx-2"
           role="button"
+          tag="button"
         >
-          Cancel
+          Enter confirmation code
         </router-link>
-      </div>
+      </fieldset>
     </form>
 
     <form
@@ -111,45 +115,41 @@
       @submit.prevent="confirm"
       v-if="authFlow === 'confirm'"
     >
-      <input
-        type="email"
-        class="form-control form-control-lg"
-        id="emailInput"
-        aria-describedby="emailHelp"
-        placeholder="Email"
-        v-model="formEmail"
-      />
-      <small id="emailHelp" class="form-text text-muted"
-        >Enter your email address</small
-      >
-      <input
-        type="text"
-        class="form-control form-control-lg"
-        id="codeInput"
-        aria-describedby="codeHelp"
-        placeholder="Confirmation code"
-        v-model="formConfirmationCode"
-      />
-      <small id="codeHelp" class="form-text text-muted"
-        >Enter your confirmation code</small
-      >
-      <button
-        name="confirmButton"
-        class="btn btn-primary btn-lg my-2"
-        role="button"
-        type="submit"
-      >
-        Confirm
-      </button>
-
-      <router-link
-        to="/"
-        name="cancelButton"
-        class="btn btn-primary btn-lg my-2 mx-2"
-        role="button"
-      >
-        Cancel
-      </router-link>
+      <fieldset class="form-group" form="confirm-form">
+        <legend>Enter your confirmation code</legend>
+        <label id="emailHelp" class="form-text text-info" for="emailInput"
+          >Enter your email address</label
+        >
+        <input
+          type="email"
+          class="form-control form-control-lg"
+          id="emailInput"
+          aria-describedby="emailHelp"
+          autocomplete="current-password"
+          v-model="formEmail"
+        />
+        <label id="codeHelp" class="form-text text-info" for="codeInput"
+          >Enter your confirmation code</label
+        >
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          id="codeInput"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          aria-describedby="codeHelp"
+          autocomplete="one-time-code"
+          v-model="formConfirmationCode"
+        />
+        <button
+          name="confirmButton"
+          class="btn btn-primary btn-lg my-2"
+          role="button"
+          type="submit"
+        >
+          Confirm
+        </button>
+      </fieldset>
     </form>
   </section>
 </template>

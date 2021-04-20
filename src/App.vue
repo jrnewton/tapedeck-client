@@ -1,6 +1,6 @@
 <template>
   <div class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
-    <header class="row">
+    <header class="row" role="banner">
       <div class="col-12 col-lg-8">
         <a href="/" style="text-decoration: none">
           <h1 class="display-3">
@@ -10,10 +10,10 @@
         <p class="lead">Record radio streams to the cloud</p>
       </div>
     </header>
-    <main>
+    <main role="main">
       <router-view></router-view>
     </main>
-    <footer class="mt-3">
+    <footer role="contentinfo" class="mt-3">
       <!-- class="d-block d-sm-none" -->
       Version: {{ appVersion }} -
       <a href="https://github.com/jrnewton/tapedeck">About</a>
