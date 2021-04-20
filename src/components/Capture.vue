@@ -94,6 +94,8 @@ export default {
           desc: this.formDesc
         });
         this.status = response;
+        this.formURL = '';
+        this.formDesc = '';
       } catch (error) {
         this.status = error;
       }
