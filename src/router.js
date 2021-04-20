@@ -94,21 +94,21 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.authRequired === false) {
-    console.debug('auth not required');
+    //console.debug('auth not required');
     next();
   } else {
     //assume auth required for all other cases
-    console.debug('auth required');
+    //console.debug('auth required');
     if (store.getters.isAuthenticated) {
-      console.debug('authenticated already!');
+      //console.debug('authenticated already!');
       next();
     } else {
-      console.debug('redirect to auth with fromRoute=', from.name);
+      //console.debug('redirect to auth with fromRoute=', from.name);
       next({
-        name: 'auth-login',
-        query: {
-          fromRoute: from.name
-        }
+        name: 'auth-login'
+        // query: {
+        //   fromRoute: from.name
+        // }
       });
     }
   }
