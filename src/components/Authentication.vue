@@ -1,8 +1,8 @@
 <template>
   <section id="auth" role="region" aria-label="Authentication">
+    <h2 class="lead">Please Login</h2>
     <form id="login-form" @submit.prevent="login" v-if="authFlow === 'login'">
       <fieldset class="form-group" form="login-form">
-        <legend>Please login</legend>
         <div class="my-2">
           <label id="emailHelp" class="form-text text-info" for="emailInput"
             >Enter your email address</label

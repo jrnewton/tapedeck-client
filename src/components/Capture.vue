@@ -1,5 +1,6 @@
 <template>
-  <section id="capture" role="region" aria-label="Archive a recording">
+  <section id="capture" role="region" aria-label="Record/capture radio streams">
+    <h2 class="lead">Record radio streams to the cloud</h2>
     <form id="capture-form" @submit.prevent="archive">
       <div class="form-group">
         <div class="my-2">
@@ -18,8 +19,7 @@
         </div>
         <div class="my-2">
           <label id="captureDescHelp" class="form-text text-info"
-            >Enter a short description that describes the content of the
-            URL.</label
+            >Enter a short description that describes the resource.</label
           >
           <input
             type="text"
@@ -37,7 +37,7 @@
           role="button"
           type="submit"
         >
-          Archive Now
+          Capture Now
         </button>
       </div>
       <p>

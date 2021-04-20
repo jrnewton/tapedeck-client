@@ -1,6 +1,6 @@
 <template>
-  <section id="archives" role="region" aria-label="Your Recent Recordings">
-    <p class="lead">Recent recordings for {{ email }}</p>
+  <section id="archives" role="region" aria-label="Recording archives">
+    <h2 class="lead">Your recordings</h2>
 
     <div
       class="card border-light mb-3"

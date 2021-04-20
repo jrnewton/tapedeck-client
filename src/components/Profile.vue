@@ -1,5 +1,5 @@
 <template>
-  <section id="profile" role="region" aria-label="User Profile">
-    <h2>User Profile</h2>
+  <section id="profile" role="region" aria-label="Your Profile">
+    <h2 class="lead">Your Profile</h2>
   </section>
 </template>

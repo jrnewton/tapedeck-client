@@ -1,5 +1,8 @@
 <template>
-  <section id="about" role="region" aria-label="About this website">
-    <a href="https://github.com/jrnewton/tapedeck">Source code</a>
+  <section id="about" role="region" aria-label="About the website">
+    <h2 class="lead">About Tape Deck</h2>
+    <p>
+      View the <a href="https://github.com/jrnewton/tapedeck">Source code</a>
+    </p>
   </section>
 </template>
