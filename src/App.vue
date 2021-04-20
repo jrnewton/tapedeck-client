@@ -22,7 +22,13 @@
 </template>
 
 <script>
+import Amplify from '@aws-amplify/core';
+import config from './awsconfig';
 export default {
+  created() {
+    Amplify.configure(config);
+    this.$store.dispatch('autoLogin');
+  },
   data() {
     return {
       appVersion: process.env.VUE_APP_VERSION
