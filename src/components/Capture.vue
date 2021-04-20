@@ -49,7 +49,7 @@
         >
       </div>
       <p>
-        {{ progress }}
+        {{ status }}
       </p>
     </form>
   </section>
@@ -63,7 +63,7 @@ export default {
       formURL: '',
       formDesc: '',
       //validation and status
-      progress: '',
+      status: '',
       formURLInvalid: false,
       formDescInvalid: false
     };
@@ -87,9 +87,17 @@ export default {
         return;
       }
 
-      this.$store.commit('formUrl', this.formURL);
-      this.$store.commit('formDesc', this.formDesc);
-      this.$router.push('/capture');
+      this.status = `Downloading ${this.formURL}`;
+
+      try {
+        const response = await this.$store.dispatch('archive', {
+          url: this.formURL,
+          desc: this.formDesc
+        });
+        this.status = response;
+      } catch (error) {
+        this.status = error;
+      }
     }
   }
 };

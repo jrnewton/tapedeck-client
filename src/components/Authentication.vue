@@ -1,8 +1,6 @@
 <template>
   <section id="auth">
     <p>AuthFlow: {{ authFlow }}</p>
-    <p>FormUrl: {{ formUrl }}</p>
-    <p>FormDesc: {{ formDesc }}</p>
 
     <form id="login-form" @submit.prevent="login" v-if="authFlow === 'login'">
       <div class="form-group">
@@ -157,8 +155,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   data() {
     return {
@@ -166,9 +162,6 @@ export default {
       formPassword: '',
       formConfirmationCode: ''
     };
-  },
-  computed: {
-    ...mapGetters(['formUrl', 'formDesc'])
   },
   props: ['authFlow'],
   methods: {

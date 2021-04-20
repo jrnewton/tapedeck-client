@@ -4,20 +4,14 @@ import Authentication from './components/Authentication.vue';
 import Capture from './components/Capture.vue';
 import ArchiveList from './components/ArchiveList.vue';
 import NotFound from './components/NotFound.vue';
+import store from './store.js';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: 'root',
-      path: '/',
-      component: Capture,
-      meta: {
-        authRequired: false
-      }
-    },
-    {
       name: 'capture',
+      alias: ['/'],
       path: '/capture',
       component: Capture,
       meta: {
@@ -88,14 +82,20 @@ router.beforeEach((to, from, next) => {
     console.log('auth not required');
     next();
   } else {
-    console.log('auth required, redirect to auth with fromRoute=', from.name);
     //assume auth required for all other cases
-    next({
-      name: 'auth-login',
-      query: {
-        fromRoute: from.name
-      }
-    });
+    console.log('auth required');
+    if (store.getters.isAuthenticated) {
+      console.log('authenticated already!');
+      next();
+    } else {
+      console.log('redirect to auth with fromRoute=', from.name);
+      next({
+        name: 'auth-login',
+        query: {
+          fromRoute: from.name
+        }
+      });
+    }
   }
 });
 
