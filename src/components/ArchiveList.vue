@@ -1,6 +1,6 @@
 <template>
   <section id="archives" role="region" aria-label="Your Recent Recordings">
-    <p class="lead">Recent recordings for {{ sessionData.email }}</p>
+    <p class="lead">Recent recordings for {{ email }}</p>
 
     <div
       class="card border-light mb-3"
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -42,6 +44,9 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(['email'])
   }
 };
 </script>

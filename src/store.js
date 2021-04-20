@@ -119,6 +119,9 @@ export default createStore({
     },
     isAuthenticated(state) {
       return !!state.accessToken;
+    },
+    email(state) {
+      return state.email;
     }
   },
   mutations: {
