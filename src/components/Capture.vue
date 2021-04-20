@@ -70,8 +70,6 @@ export default {
   },
   methods: {
     async archive() {
-      console.log('archive called');
-
       this.formURLInvalid = false;
       this.formDescInvalid = false;
 

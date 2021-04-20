@@ -166,45 +166,39 @@ export default {
   props: ['authFlow'],
   methods: {
     async login() {
-      console.log('login called');
       try {
         const payload = {
           formEmail: this.formEmail,
           formPassword: this.formPassword
         };
-        console.log(payload);
         await this.$store.dispatch('login', payload);
         this.$router.push('/capture');
       } catch (error) {
-        console.log('login error', error);
+        console.error('login error', error);
       }
     },
     async create() {
-      console.log('create called');
       try {
         const payload = {
           formEmail: this.formEmail,
           formPassword: this.formPassword
         };
-        console.log(payload);
         await this.$store.dispatch('create', payload);
         this.$router.push('/auth-confirm');
       } catch (error) {
-        console.log('create error', error);
+        console.error('create error', error);
       }
     },
     async confirm() {
-      console.log('confirm called');
       try {
         const payload = {
           formEmail: this.formEmail,
           formConfirmationCode: this.formConfirmationCode
         };
-        console.log(payload);
         await this.$store.dispatch('confirm', payload);
         this.$router.push('/capture');
       } catch (error) {
-        console.log('confirm error', error);
+        console.error('confirm error', error);
       }
     }
   }

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 import Authentication from './components/Authentication.vue';
 import Capture from './components/Capture.vue';
 import ArchiveList from './components/ArchiveList.vue';
@@ -76,19 +75,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log('Route guard:', from.name, '->', to.name);
-
   if (to.meta.authRequired === false) {
-    console.log('auth not required');
+    console.debug('auth not required');
     next();
   } else {
     //assume auth required for all other cases
-    console.log('auth required');
+    console.debug('auth required');
     if (store.getters.isAuthenticated) {
-      console.log('authenticated already!');
+      console.debug('authenticated already!');
       next();
     } else {
-      console.log('redirect to auth with fromRoute=', from.name);
+      console.debug('redirect to auth with fromRoute=', from.name);
       next({
         name: 'auth-login',
         query: {

@@ -42,7 +42,7 @@ export default createStore({
     unverifiedUser(state, data) {
       const cognitoUser = data.cognitoUser;
 
-      console.log('committing unverified user', cognitoUser);
+      console.debug('committing unverified user', cognitoUser);
       //funky - new user will have email as username, even though
       //username will be changed later by cognito upon confirmation.
       state.sessionData.email = cognitoUser.username;
@@ -50,7 +50,7 @@ export default createStore({
       state.password = data.password;
     },
     verifiedUser(state, cognitoUser) {
-      console.log('committing verified user', cognitoUser);
+      console.debug('committing verified user', cognitoUser);
 
       //call it userid because it's id-ish in shape.
       state.userid = cognitoUser.username;
@@ -60,7 +60,7 @@ export default createStore({
         state.accessToken = cogSession.getAccessToken().getJwtToken();
         state.idToken = cogSession.getIdToken().getJwtToken();
       } else {
-        console.log('no cognito session');
+        console.error('no cognito session');
         state.accessToken = null;
         state.idToken = null;
       }
@@ -69,30 +69,30 @@ export default createStore({
         state.email = cognitoUser.attributes['email'];
         state.verified = cognitoUser.attributes['email_verified'];
       } else {
-        console.log('no user attributes');
+        console.error('no user attributes');
         state.email = '';
         state.verified = false;
       }
-      console.log('state is now', state);
+      console.debug('state is now', state);
     }
   },
   actions: {
     async login(context, data) {
-      console.log('login called');
+      console.debug('login called with', data);
 
       try {
         authSetup();
         const user = await Auth.signIn(data.formEmail, data.formPassword);
-        console.log('login result', user);
+        console.debug('login result', user);
         context.commit('verifiedUser', user);
-        console.log('login done');
+        console.debug('login done');
       } catch (error) {
-        console.log('login error', error);
+        console.error('login error', error);
         throw error;
       }
     },
     async create(context, data) {
-      console.log('create called');
+      console.debug('create called with', data);
       try {
         authSetup();
         const params = {
@@ -103,18 +103,18 @@ export default createStore({
           // }
         };
         const { user } = await Auth.signUp(params);
-        console.log('create result', user);
+        console.debug('create result', user);
         context.commit('unverifiedUser', {
           cognitoUser: user,
           password: data.formPassword
         });
-        console.log('create done');
+        console.debug('create done');
       } catch (error) {
-        console.log('create error', error);
+        console.error('create error', error);
       }
     },
     async confirm(context, data) {
-      console.log('confirm called');
+      console.debug('confirm called with', data);
       try {
         authSetup();
         const result = await Auth.confirmSignUp(
@@ -132,9 +132,9 @@ export default createStore({
         } else {
           throw new Error('unexpected results from confirmation call', result);
         }
-        console.log('confirm done');
+        console.debug('confirm done');
       } catch (error) {
-        console.log('confirm error', error);
+        console.error('confirm error', error);
       } finally {
         context.commit('clearPassword');
       }
@@ -144,9 +144,10 @@ export default createStore({
      * @param {*} data map containing 'url' and 'desc' keys.
      */
     async archive(context, data) {
+      console.debug('archive called with', data);
       try {
         const apiURL = `${apiEndpoint}/archive?accessToken=${context.getters.accessToken}`;
-        console.log('archive POST', apiURL);
+        console.debug('archive POST', apiURL);
 
         const response = await fetch(apiURL, {
           method: 'POST',
@@ -161,15 +162,15 @@ export default createStore({
           })
         });
 
-        console.log('archive response', response);
+        console.debug('archive response', response);
 
         if (response.ok) {
           const json = await response.json();
-          console.log('archive response msg', json);
-          console.log('archive done');
+          console.debug('archive response msg', json);
+          console.debug('archive done');
           return json;
         } else {
-          console.log(
+          console.error(
             'archive throwing error due to status',
             response.status,
             response.statusText
@@ -177,7 +178,7 @@ export default createStore({
           throw new Error(response.status + ': ' + response.statusText);
         }
       } catch (error) {
-        console.log('archive error', error);
+        console.error('archive error', error);
         throw error;
       }
     }
