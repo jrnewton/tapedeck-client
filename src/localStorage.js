@@ -9,5 +9,5 @@ export const getItem = (key) => {
 };
 
 export const removeItem = (key) => {
-  localStorage.remoteItem(`${prefix}-${key}`);
+  localStorage.removeItem(`${prefix}-${key}`);
 };
