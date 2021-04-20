@@ -45,8 +45,8 @@ export default createStore({
       console.debug('committing unverified user', cognitoUser);
       //funky - new user will have email as username, even though
       //username will be changed later by cognito upon confirmation.
-      state.sessionData.email = cognitoUser.username;
-      state.sessionData.verified = false;
+      state.email = cognitoUser.username;
+      state.verified = false;
       state.password = data.password;
     },
     verifiedUser(state, cognitoUser) {
