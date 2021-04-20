@@ -2,29 +2,24 @@
   <section id="archives" role="region" aria-label="Recording archives">
     <h2 class="lead">Your recordings</h2>
 
-    <div
-      class="card border-light mb-3"
-      style="max-width: 20rem"
-      v-for="item in recent"
-      :key="item.id"
-    >
-      <div class="card-header">{{ item.desc }}</div>
-      <div class="card-body">
-        <!-- <p class="card-title">
+    <table class="table table-hover mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Date Saved</th>
+          <th scope="col">Description</th>
+          <th scope="col">URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-active" v-for="item in recent" :key="item.id">
+          <th scope="row">{{ item.createDate }}</th>
+          <td>{{ item.desc }}</td>
+          <td>
             <a :href="item.url">{{ item.url }}</a>
-          </p> -->
-        <p class="card-text">
-          <audio controls ref="audio" preload="meta">
-            <source :src="item.url" type="audio/mpeg" />
-            <p>
-              Your browser does not support audio controls but you can
-              <a :href="item.url">download the file</a>
-              directly.
-            </p>
-          </audio>
-        </p>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </template>
 
@@ -38,7 +33,22 @@ export default {
       recent: [
         {
           id: 1,
-          desc: 'Test File',
+          createDate: '2020-10-31',
+          desc: 'Backwoods Halloween 2020',
+          url:
+            'https://tapedeck-sample-files.s3.us-east-2.amazonaws.com/test.mp3'
+        },
+        {
+          id: 2,
+          createDate: '2021-01-02',
+          desc: 'James Dean Death Car New Year Day',
+          url:
+            'https://tapedeck-sample-files.s3.us-east-2.amazonaws.com/test.mp3'
+        },
+        {
+          id: 3,
+          desc: 'Late Risers Club - last week',
+          createDate: '2021-04-25',
           url:
             'https://tapedeck-sample-files.s3.us-east-2.amazonaws.com/test.mp3'
         }
