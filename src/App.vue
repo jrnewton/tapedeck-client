@@ -1,7 +1,8 @@
 <template>
-  <div class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
+  <div class="container">
+    <!-- jumbotron m-0 m-sm-3 m-lg-5 py-1" -->
     <header class="row" role="banner">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-8 col-lg-6">
         <nav
           class="navbar navbar-expand navbar-dark bg-dark mt-3"
           role="navigation"
@@ -47,14 +48,14 @@
       </div>
     </header>
     <div class="row">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-8 col-lg-6">
         <main role="main">
           <router-view></router-view>
         </main>
       </div>
     </div>
     <div class="row">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-8 col-lg-6">
         <footer role="contentinfo" class="mt-3">
           <small> v{{ appVersion }} </small>
         </footer>
