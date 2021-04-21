@@ -1,6 +1,6 @@
 <template>
-  <section id="archives" role="region" aria-label="Recording archives">
-    <h2 class="lead mt-3">Your recordings</h2>
+  <section id="archives" role="region" aria-label="Your recordings">
+    <h2 class="lead mt-3">Your Recordings</h2>
 
     <table class="table table-hover mt-3">
       <thead>

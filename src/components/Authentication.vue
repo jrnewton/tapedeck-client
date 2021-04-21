@@ -1,8 +1,14 @@
 <template>
-  <section id="auth" role="region" aria-label="Authentication">
-    <h2 class="lead mt-3">Please Login</h2>
-    <form id="login-form" @submit.prevent="login" v-if="authFlow === 'login'">
+  <h2 class="lead mt-3">Authentication</h2>
+  <section
+    id="auth-login"
+    role="region"
+    aria-label="Login to your account"
+    v-if="authFlow === 'login'"
+  >
+    <form id="login-form" @submit.prevent="login">
       <fieldset class="form-group" form="login-form">
+        <legend>Login to your account</legend>
         <div class="my-2">
           <label id="emailHelp" class="form-text text-info" for="emailInput"
             >Enter your email address</label
@@ -34,7 +40,7 @@
         </div>
         <button
           name="loginButton"
-          class="btn btn-primary btn-lg my-2"
+          class="btn btn-primary btn my-2"
           role="button"
           type="submit"
         >
@@ -43,7 +49,7 @@
         <router-link
           to="/auth-create"
           name="newAccountButton"
-          class="btn btn-outline-secondary btn-lg my-2 mx-2"
+          class="btn btn-outline-secondary btn my-2 mx-2"
           role="button"
           tag="button"
         >
@@ -51,12 +57,14 @@
         </router-link>
       </fieldset>
     </form>
-
-    <form
-      id="create-form"
-      @submit.prevent="create"
-      v-if="authFlow === 'create'"
-    >
+  </section>
+  <section
+    id="auth-create"
+    role="region"
+    aria-label="Create a new account"
+    v-if="authFlow === 'create'"
+  >
+    <form id="create-form" @submit.prevent="create">
       <fieldset class="form-group" form="create-form">
         <legend>Create a new account</legend>
         <div class="my-2">
@@ -90,7 +98,7 @@
         </div>
         <button
           name="createButton"
-          class="btn btn-primary btn-lg my-2"
+          class="btn btn-primary btn my-2"
           href="#"
           role="button"
           type="submit"
@@ -101,7 +109,7 @@
         <router-link
           to="/auth-confirm"
           name="codeButton"
-          class="btn btn-outline-secondary btn-lg my-2 mx-2"
+          class="btn btn-outline-secondary btn my-2 mx-2"
           role="button"
           tag="button"
         >
@@ -109,14 +117,16 @@
         </router-link>
       </fieldset>
     </form>
-
-    <form
-      id="confirm-form"
-      @submit.prevent="confirm"
-      v-if="authFlow === 'confirm'"
-    >
+  </section>
+  <section
+    id="auth-confirm"
+    role="region"
+    aria-label="Confirm your new account"
+    v-if="authFlow === 'confirm'"
+  >
+    <form id="confirm-form" @submit.prevent="confirm">
       <fieldset class="form-group" form="confirm-form">
-        <legend>Enter your confirmation code</legend>
+        <legend>Confirm your new account</legend>
         <label id="emailHelp" class="form-text text-info" for="emailInput"
           >Enter your email address</label
         >
@@ -143,7 +153,7 @@
         />
         <button
           name="confirmButton"
-          class="btn btn-primary btn-lg my-2"
+          class="btn btn-primary btn my-2"
           role="button"
           type="submit"
         >

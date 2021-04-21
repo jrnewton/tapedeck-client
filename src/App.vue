@@ -1,16 +1,14 @@
 <template>
+  <!-- <div class="container m-0 m-sm-3 m-lg-5 py-1"> -->
   <div class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
     <header class="row" role="banner">
-      <div class="col-12 col-lg-8">
-        <!-- <a href="/" style="text-decoration: none">
-          <h2 class="d-inline d-sm-none">Tape Deck</h2>
-        </a> -->
+      <div class="col-12 col-md-6">
         <nav
           class="navbar navbar-expand navbar-dark bg-dark mt-3"
           role="navigation"
         >
           <router-link to="/" class="navbar-brand" data-cy="homeLink"
-            >Tape Deck</router-link
+            >Tape<br />Deck</router-link
           >
           <div class="collapse navbar-collapse" id="navbarColor03">
             <ul class="navbar-nav mr-auto">
@@ -49,15 +47,20 @@
         </nav>
       </div>
     </header>
-    <main role="main">
-      <router-view></router-view>
-    </main>
-    <footer role="contentinfo" class="mt-3">
-      <small>
-        <!-- class="d-block d-sm-none" -->
-        v{{ appVersion }}
-      </small>
-    </footer>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <main role="main">
+          <router-view></router-view>
+        </main>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <footer role="contentinfo" class="mt-3">
+          <small> v{{ appVersion }} </small>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,6 +80,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout');
+      this.$router.push('/');
     }
   }
 };
