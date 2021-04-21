@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="container m-0 m-sm-3 m-lg-5 py-1"> -->
   <div class="jumbotron m-0 m-sm-3 m-lg-5 py-1">
     <header class="row" role="banner">
       <div class="col-12 col-md-6">
