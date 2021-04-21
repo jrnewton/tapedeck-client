@@ -170,21 +170,22 @@ export default createStore({
         startSessionTimer(context, user.expiration);
 
         context.commit('user', user);
-
-        console.debug('login done');
       } catch (error) {
         console.error('login error', error);
         throw error;
       }
+
+      console.debug('login done');
     },
     async logout(context) {
       console.debug('logout called');
 
       try {
-        const result = await Auth.signOut();
-        console.debug('logout result', result);
+        //signout does not return a result.
+        await Auth.signOut();
+        console.debug('signout returned');
       } catch (error) {
-        console.error('logout error', error);
+        console.error('signout error', error);
         throw error;
       }
 
@@ -198,6 +199,8 @@ export default createStore({
       clearSessionTimer();
 
       context.commit('user', newUser());
+
+      console.debug('logout done');
     },
     async autoLogin(context) {
       console.debug('autoLogin called');
@@ -212,7 +215,7 @@ export default createStore({
       const expiration = getItem('expiration');
       const { alreadyExpired } = getRemainingTime(expiration);
       if (alreadyExpired) {
-        console.debug('abort autologin, session expired');
+        console.debug('autoLogin aborted, session is expired');
         return;
       }
 
@@ -231,6 +234,8 @@ export default createStore({
       });
 
       startSessionTimer(context, expiration);
+
+      console.debug('autoLogin done');
     },
     async create(context, data) {
       console.debug('create called with', data);
@@ -245,11 +250,12 @@ export default createStore({
       try {
         const { user } = await Auth.signUp(params);
         console.debug('create result', user);
-        console.debug('create done');
       } catch (error) {
         console.error('create error', error);
         throw error;
       }
+
+      console.debug('create done');
     },
     async confirm(context, data) {
       console.debug('confirm called with', data);
@@ -267,15 +273,18 @@ export default createStore({
             formPassword: context.getters.password
           });
         } else {
-          throw new Error('unexpected results from confirmation call', result);
+          let msg = 'confirmSignUp returned unexpected result ' + result;
+          console.error(msg);
+          throw new Error(msg);
         }
-        console.debug('confirm done');
       } catch (error) {
         console.error('confirm error', error);
         throw error;
       } finally {
         context.commit('clearPassword');
       }
+
+      console.debug('confirm done');
     },
     /**
      * @param {*} context
