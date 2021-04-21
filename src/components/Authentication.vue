@@ -1,6 +1,6 @@
 <template>
   <section id="auth" role="region" aria-label="Authentication">
-    <h2 class="lead">Please Login</h2>
+    <h2 class="lead mt-3">Please Login</h2>
     <form id="login-form" @submit.prevent="login" v-if="authFlow === 'login'">
       <fieldset class="form-group" form="login-form">
         <div class="my-2">

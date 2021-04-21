@@ -1,6 +1,6 @@
 <template>
   <section id="capture" role="region" aria-label="Record/capture radio streams">
-    <h2 class="lead">Record radio streams to the cloud</h2>
+    <h2 class="lead mt-3">Record radio streams to the cloud</h2>
     <form id="capture-form" @submit.prevent="archive">
       <div class="form-group">
         <div class="my-2">

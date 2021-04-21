@@ -1,6 +1,6 @@
 <template>
   <section id="notfound" role="region" aria-label="Page not found details">
-    <h2 class="lead">Page not found!</h2>
+    <h2 class="lead mt-3">Page not found!</h2>
 
     Try these links:
     <ul>

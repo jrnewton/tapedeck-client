@@ -1,6 +1,6 @@
 <template>
   <section id="archives" role="region" aria-label="Recording archives">
-    <h2 class="lead">Your recordings</h2>
+    <h2 class="lead mt-3">Your recordings</h2>
 
     <table class="table table-hover mt-3">
       <thead>
@@ -48,9 +48,16 @@ export default {
         {
           id: 3,
           desc: 'Late Risers Club - last week',
-          createDate: '2021-04-25',
+          createDate: '2021-03-25',
           url:
             'https://tapedeck-sample-files.s3.us-east-2.amazonaws.com/test.mp3'
+        },
+        {
+          id: 4,
+          desc: 'S3 test file',
+          createDate: '2021-04-20',
+          url:
+            'https://tapedeck-archives.s3.us-east-2.amazonaws.com/d6ade639-bada-4ea2-9381-52c9d625cec2/1ebc2c3d-9972-4ce8-9fa2-b76b7babb44c.mp3'
         }
       ]
     };
