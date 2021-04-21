@@ -64,7 +64,9 @@ const newUser = () => {
     verified: false,
     accessToken: null,
     idToken: null,
-    expiration: null
+    expiration: null,
+    //split this into another module
+    archiveList: null
   };
 };
 
@@ -122,6 +124,9 @@ export default createStore({
     },
     email(state) {
       return state.email;
+    },
+    archiveList(state) {
+      return state.archiveList;
     }
   },
   mutations: {
@@ -130,7 +135,7 @@ export default createStore({
       console.debug('password cleared');
     },
     user(state, user) {
-      console.debug('committing user', user);
+      console.debug('user commit called', user);
 
       state.accessToken = user.accessToken;
       state.idToken = user.idToken;
@@ -145,7 +150,12 @@ export default createStore({
         state.password = null;
       }
 
-      console.debug('state is now', state);
+      console.debug('user commit done');
+    },
+    archiveList(state, list) {
+      console.debug('archiveList commit called', list);
+      state.archiveList = list;
+      console.debug('archiveList commit done');
     }
   },
   actions: {
@@ -328,6 +338,46 @@ export default createStore({
         console.error('archive error', error);
         throw error;
       }
+    },
+    async loadArchiveList(context) {
+      console.debug('loadArchiveList called');
+      try {
+        const apiURL = `${apiEndpoint}/list?accessToken=${context.getters.accessToken}`;
+        console.debug('list GET', apiURL);
+
+        const response = await fetch(apiURL, {
+          method: 'GET',
+          headers: {
+            //prettier-ignore
+            'Authorization': context.getters.idToken,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        console.debug('list response', response);
+
+        if (response.ok) {
+          const json = await response.json();
+          console.debug('list response msg', json);
+          if (json.objects) {
+            context.commit('archiveList', json.objects);
+          } else {
+            console.debug('list returned empty objects list');
+          }
+        } else {
+          console.error(
+            'loadArchiveList throwing error due to list status',
+            response.status,
+            response.statusText
+          );
+          throw new Error(response.status + ': ' + response.statusText);
+        }
+      } catch (error) {
+        console.error('loadArchiveList error', error);
+        throw error;
+      }
+
+      console.debug('loadArchiveList done');
     }
   }
 });
