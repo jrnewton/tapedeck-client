@@ -81,7 +81,7 @@ export default {
         return;
       }
 
-      this.status = `Downloading ${this.formURL}`;
+      this.status = `Sending ${this.formURL}`;
 
       try {
         const response = await this.$store.dispatch('archive', {

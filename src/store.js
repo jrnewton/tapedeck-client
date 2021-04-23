@@ -66,7 +66,8 @@ const newUser = () => {
     idToken: null,
     expiration: null,
     //split this into another module
-    archiveList: null
+    archiveList: null,
+    archiveSize: 0
   };
 };
 
@@ -127,6 +128,9 @@ export default createStore({
     },
     archiveList(state) {
       return state.archiveList;
+    },
+    archiveSize(state) {
+      return state.archiveSize;
     }
   },
   mutations: {
@@ -156,6 +160,9 @@ export default createStore({
       console.debug('archiveList commit called', list);
       state.archiveList = list;
       console.debug('archiveList commit done');
+    },
+    archiveSize(state, size) {
+      state.archiveSize = size;
     }
   },
   actions: {
@@ -303,7 +310,7 @@ export default createStore({
     async archive(context, data) {
       console.debug('archive called with', data);
       try {
-        const apiURL = `${apiEndpoint}/archive?accessToken=${context.getters.accessToken}`;
+        const apiURL = `${apiEndpoint}/archive2?accessToken=${context.getters.accessToken}`;
         console.debug('archive POST', apiURL);
 
         const response = await fetch(apiURL, {
@@ -339,10 +346,10 @@ export default createStore({
         throw error;
       }
     },
-    async loadArchiveList(context) {
-      console.debug('loadArchiveList called');
+    async loadArchive(context) {
+      console.debug('loadArchive called');
       try {
-        const apiURL = `${apiEndpoint}/list?accessToken=${context.getters.accessToken}`;
+        const apiURL = `${apiEndpoint}/list/all?accessToken=${context.getters.accessToken}`;
         console.debug('list GET', apiURL);
 
         const response = await fetch(apiURL, {
@@ -359,21 +366,22 @@ export default createStore({
         if (response.ok) {
           const json = await response.json();
           console.debug('list response msg', json);
-          if (json.objects) {
-            context.commit('archiveList', json.objects);
+          if (json.data) {
+            context.commit('archiveList', json.data);
+            context.commit('archiveSize', json.count);
           } else {
-            console.debug('list returned empty objects list');
+            console.debug('list returned empty items list');
           }
         } else {
           console.error(
-            'loadArchiveList throwing error due to list status',
+            'loadArchive throwing error due to list status',
             response.status,
             response.statusText
           );
           throw new Error(response.status + ': ' + response.statusText);
         }
       } catch (error) {
-        console.error('loadArchiveList error', error);
+        console.error('loadArchive error', error);
         throw error;
       }
 

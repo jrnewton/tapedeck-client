@@ -5,20 +5,22 @@
     aria-label="A list of all your archived recordings"
   >
     <h2 class="lead mt-3">Your Recordings</h2>
-
+    <small>Count: {{ archiveSize }}</small>
     <table class="table table-hover mt-3">
       <thead>
         <tr>
-          <th scope="col">Date</th>
+          <th scope="col">Title</th>
           <th scope="col">Description</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
         <tr class="table-active" v-for="item in archiveList" :key="item.id">
-          <td>{{ item.createDate }}</td>
           <td>
-            <a :href="item.url">{{ item.desc }}</a>
+            <a :href="item.url">{{ item.title }}</a>
           </td>
+          <td>{{ item.desc }}</td>
+          <td>{{ item.status }}</td>
         </tr>
       </tbody>
     </table>
@@ -30,18 +32,18 @@ import { mapGetters } from 'vuex';
 
 export default {
   created() {
-    this.loadArchiveList();
+    this.loadArchive();
   },
   computed: {
-    ...mapGetters(['email', 'archiveList'])
+    ...mapGetters(['email', 'archiveList', 'archiveSize'])
   },
   methods: {
-    async loadArchiveList() {
-      console.debug('loadArchiveList called');
+    async loadArchive() {
+      console.debug('loadArchive called');
       try {
-        await this.$store.dispatch('loadArchiveList');
+        await this.$store.dispatch('loadArchive');
       } catch (error) {
-        console.error('loadArchiveList error', error);
+        console.error('loadArchive error', error);
       }
     }
   }
