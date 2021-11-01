@@ -8,11 +8,14 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  hidePassword: boolean;
   requiresLogin: boolean;
 
   constructor(authService: AuthService) {
     this.requiresLogin = !authService.isAuthenticated;
     console.log('requiresLogin is', this.requiresLogin);
+
+    this.hidePassword = true;
   }
 
   ngOnInit(): void {
