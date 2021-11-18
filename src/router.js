@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Authentication from './components/Authentication.vue';
 import Capture from './components/Capture.vue';
+import Main from './components/Main.vue';
 import ArchiveList from './components/ArchiveList.vue';
 import NotFound from './components/NotFound.vue';
 import Profile from './components/Profile.vue';
@@ -11,9 +12,17 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
+      name: 'main',
+      path: '/',
+      component: Main,
+      meta: {
+        authRequired: false
+      }
+    },
+    {
       name: 'capture',
-      alias: ['/'],
       path: '/capture',
+      aliases: ['/capture'],
       component: Capture,
       meta: {
         authRequired: true
@@ -48,7 +57,7 @@ const router = createRouter({
       path: '/auth-login',
       component: Authentication,
       props: {
-        default: true,
+        // default: true,
         authFlow: 'login'
       },
       meta: {
@@ -60,7 +69,7 @@ const router = createRouter({
       path: '/auth-create',
       component: Authentication,
       props: {
-        default: true,
+        // default: true,
         authFlow: 'create'
       },
       meta: {
@@ -72,7 +81,7 @@ const router = createRouter({
       path: '/auth-confirm',
       component: Authentication,
       props: {
-        default: true,
+        // default: true,
         authFlow: 'confirm'
       },
       meta: {

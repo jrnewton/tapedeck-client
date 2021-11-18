@@ -1,5 +1,4 @@
 <template>
-  <h2 class="lead mt-3">Authentication</h2>
   <section
     id="auth-login"
     role="region"
@@ -8,7 +7,9 @@
   >
     <form id="login-form" @submit.prevent="login">
       <fieldset class="form-group" form="login-form">
-        <legend>Login to your account</legend>
+        <legend>
+          <h2 class="lead mt-3">Login to your account</h2>
+        </legend>
         <div class="my-2">
           <label id="emailHelp" class="form-text text-info" for="emailInput"
             >Enter your email address</label
@@ -40,7 +41,7 @@
         </div>
         <button
           name="loginButton"
-          class="btn btn-primary btn my-2"
+          class="btn btn-info btn my-2"
           role="button"
           type="submit"
         >
@@ -66,7 +67,7 @@
   >
     <form id="create-form" @submit.prevent="create">
       <fieldset class="form-group" form="create-form">
-        <legend>Create a new account</legend>
+        <legend><h2 class="lead mt-3">Create a new account</h2></legend>
         <div class="my-2">
           <label id="emailHelp" class="form-text text-info" for="emailInput"
             >Enter your email address</label
@@ -98,7 +99,7 @@
         </div>
         <button
           name="createButton"
-          class="btn btn-primary btn my-2"
+          class="btn btn-info btn my-2"
           href="#"
           role="button"
           type="submit"
@@ -126,7 +127,7 @@
   >
     <form id="confirm-form" @submit.prevent="confirm">
       <fieldset class="form-group" form="confirm-form">
-        <legend>Confirm your new account</legend>
+        <legend><h2 class="lead mt-3">Confirm your new account</h2></legend>
         <label id="emailHelp" class="form-text text-info" for="emailInput"
           >Enter your email address</label
         >
@@ -153,7 +154,7 @@
         />
         <button
           name="confirmButton"
-          class="btn btn-primary btn my-2"
+          class="btn btn-info btn my-2"
           role="button"
           type="submit"
         >
