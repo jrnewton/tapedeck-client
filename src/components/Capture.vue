@@ -4,7 +4,7 @@
     role="region"
     aria-label="Use this section to capture radio streams"
   >
-    <h2 class="lead mt-3">Record radio streams to the cloud</h2>
+    <h2 class="lead mt-3">Capture a recording</h2>
     <form id="capture-form" @submit.prevent="archive">
       <div class="form-group">
         <div class="my-2">
@@ -36,7 +36,7 @@
         </div>
         <button
           name="captureURLButton"
-          class="btn btn-info btn my-2"
+          class="btn btn-info my-2"
           href="#"
           role="button"
           type="submit"
@@ -44,6 +44,7 @@
           Capture Now
         </button>
       </div>
+      <!-- status message -->
       <p>
         {{ status }}
       </p>
