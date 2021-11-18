@@ -4,8 +4,8 @@
     role="region"
     aria-label="A list of all your archived recordings"
   >
-    <h2 class="lead mt-3">Your Recordings</h2>
-    <small>Count: {{ archiveSize }}</small>
+    <h2 class="lead mt-3">Your Archived Recordings</h2>
+    <small>Number of recordings: {{ archiveSize }}</small>
     <table class="table table-hover mt-3">
       <thead>
         <tr>

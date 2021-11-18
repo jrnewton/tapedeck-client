@@ -1,6 +1,6 @@
 {
   "name": "tapedeck-client",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -84,6 +84,7 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
-    "quoteProps": "consistent"
+    "quoteProps": "consistent",
+    "endOfLine": "auto"
   }
 }

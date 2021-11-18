@@ -1,67 +1,35 @@
 <template>
   <div class="container">
-    <!-- jumbotron m-0 m-sm-3 m-lg-5 py-1" -->
-    <header class="row" role="banner">
+    <!-- <div class="jumbotron m-0 m-sm-3 m-lg-5 py-1"> -->
+    <!-- <header class="row" role="banner">
       <div class="col-12 col-md-8 col-lg-6">
-        <nav
-          class="navbar navbar-expand navbar-dark bg-dark mt-3"
-          role="navigation"
+        <h1>Tape Deck</h1>
+      </div>
+    </header> -->
+    <!-- <div class="row">
+      <div class="col-12 col-md-8 col-lg-6"> -->
+    <div class="jumbotron">
+      <main role="main">
+        <router-link to="/" style="text-decoration: none">
+          <h1 class="display-4">Tape Deck</h1>
+        </router-link>
+        <router-view></router-view>
+      </main>
+      <!-- </div>
+    </div> -->
+      <!-- <div class="row">
+      <div class="col-12 col-md-8 col-lg-6"> -->
+      <footer role="contentinfo" class="mt-3">
+        <small
+          ><a href="https://github.com/jrnewton/tapedeck"
+            >v{{ appVersion }}</a
+          ></small
         >
-          <router-link to="/" class="navbar-brand" data-cy="homeLink"
-            >Tape<br />Deck</router-link
-          >
-          <div class="collapse navbar-collapse" id="navbarColor03">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <router-link
-                  to="/archives"
-                  class="nav-link"
-                  data-cy="archivesLink"
-                  >Archives</router-link
-                >
-              </li>
-              <li class="nav-item">
-                <router-link
-                  to="/profile"
-                  class="nav-link"
-                  data-cy="profileLink"
-                  >Profile</router-link
-                >
-              </li>
-              <li class="nav-item">
-                <router-link to="/about" class="nav-link" data-cy="aboutLink"
-                  >About</router-link
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#"
-                  class="nav-link"
-                  data-cy="logoutLink"
-                  @click="logout"
-                  >Logout</a
-                >
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <div class="row">
-      <div class="col-12 col-md-8 col-lg-6">
-        <main role="main">
-          <router-view></router-view>
-        </main>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-md-8 col-lg-6">
-        <footer role="contentinfo" class="mt-3">
-          <small> v{{ appVersion }} </small>
-        </footer>
-      </div>
+      </footer>
     </div>
   </div>
+  <!-- </div>
+  </div> -->
 </template>
 
 <script>
