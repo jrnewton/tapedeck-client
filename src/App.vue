@@ -14,6 +14,16 @@
           <h1 class="display-4">Tape Deck</h1>
         </router-link>
         <router-view></router-view>
+        <button
+          v-if="isAuthenticated"
+          name="logOutButton"
+          class="btn btn-info my-2"
+          href="#"
+          role="button"
+          @click="logout"
+        >
+          Log Out
+        </button>
       </main>
       <!-- </div>
     </div> -->
@@ -35,6 +45,7 @@
 <script>
 import Amplify from '@aws-amplify/core';
 import config from './awsconfig';
+import { mapGetters } from 'vuex';
 export default {
   created() {
     Amplify.configure(config);
@@ -44,6 +55,9 @@ export default {
     return {
       appVersion: process.env.VUE_APP_VERSION
     };
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated'])
   },
   methods: {
     logout() {
