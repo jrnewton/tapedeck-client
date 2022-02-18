@@ -22,7 +22,6 @@ const router = createRouter({
     {
       name: 'capture',
       path: '/capture',
-      aliases: ['/capture'],
       component: Capture,
       meta: {
         authRequired: true
@@ -114,10 +113,10 @@ router.beforeEach((to, from, next) => {
     } else {
       //console.debug('redirect to auth with fromRoute=', from.name);
       next({
-        name: 'auth-login'
-        // query: {
-        //   fromRoute: from.name
-        // }
+        name: 'auth-login',
+        query: {
+          from: from.name
+        }
       });
     }
   }
