@@ -8,7 +8,7 @@
     <small>Number of recordings: {{ archiveSize }}</small>
     <table class="table table-hover mt-3">
       <thead>
-        <tr>
+        <tr class="table-dark">
           <th scope="col">Title</th>
           <th scope="col">Description</th>
           <th scope="col">Status</th>
