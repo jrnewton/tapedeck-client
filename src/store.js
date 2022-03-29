@@ -134,6 +134,9 @@ export default createStore({
     }
   },
   mutations: {
+    password(state, pwd) {
+      state.password = pwd;
+    },
     clearPassword(state) {
       state.password = null;
       console.debug('password cleared');
@@ -267,6 +270,10 @@ export default createStore({
       try {
         const { user } = await Auth.signUp(params);
         console.debug('create result', user);
+        //Kludge alert!
+        //Cognito requires the user to login again after confirmation.
+        //Do the login for them behind the scenes.
+        context.commit('password', data.formPassword);
       } catch (error) {
         console.error('create error', error);
         throw error;
@@ -281,9 +288,7 @@ export default createStore({
           data.formEmail,
           data.formConfirmationCode
         );
-        //Kludge alert!
-        //Cognito requires the user to login again after confirmation.
-        //Do the login for them behind the scenes.
+        //Kludge alert! - auto login after confirmation
         if (result === 'SUCCESS') {
           await context.dispatch('login', {
             formEmail: data.formEmail,

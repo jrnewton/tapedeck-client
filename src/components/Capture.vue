@@ -45,8 +45,8 @@
         </button>
       </div>
       <!-- status message -->
-      <p>
-        {{ status }}
+      <p :class="statusClass">
+        {{ statusMessage }}
       </p>
     </form>
   </section>
@@ -60,7 +60,8 @@ export default {
       formURL: '',
       formDesc: '',
       //validation and status
-      status: '',
+      statusClass: 'text-success',
+      statusMessage: '',
       formURLInvalid: false,
       formDescInvalid: false
     };
@@ -82,18 +83,20 @@ export default {
         return;
       }
 
-      this.status = `Sending ${this.formURL}`;
+      this.statusClass = 'text-success';
+      this.statusMessage = `Sending ${this.formURL}`;
 
       try {
         const response = await this.$store.dispatch('archive', {
           url: this.formURL,
           desc: this.formDesc
         });
-        this.status = response;
+        this.statusMessage = response;
         this.formURL = '';
         this.formDesc = '';
       } catch (error) {
-        this.status = error;
+        this.statusClass = 'text-danger';
+        this.statusMessage = error.message || 'An unknown error has occurred';
       }
     }
   }
