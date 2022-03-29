@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Authentication from './components/Authentication.vue';
+import ForgotPassword from './components/ForgotPassword.vue';
 import Capture from './components/Capture.vue';
 import Main from './components/Main.vue';
 import ArchiveList from './components/ArchiveList.vue';
@@ -88,6 +89,14 @@ const router = createRouter({
       }
     },
     {
+      name: 'auth-forgot',
+      path: '/auth-forgot',
+      component: ForgotPassword,
+      meta: {
+        authRequired: false
+      }
+    },
+    {
       name: 'not-found',
       //pass regex to variable
       path: '/:notFound(.*)',
@@ -111,11 +120,10 @@ router.beforeEach((to, from, next) => {
       //console.debug('authenticated already!');
       next();
     } else {
-      //console.debug('redirect to auth with fromRoute=', from.name);
       next({
         name: 'auth-login',
         query: {
-          from: from.name
+          next: to.name
         }
       });
     }
