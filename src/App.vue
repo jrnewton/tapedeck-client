@@ -17,7 +17,7 @@
         <button
           v-if="isAuthenticated"
           name="logOutButton"
-          class="btn btn-info my-2"
+          class="btn btn-outline-secondary my-2"
           href="#"
           role="button"
           @click="logout"
