@@ -26,7 +26,7 @@
     <router-link
       to="/archives"
       name="archivesButton"
-      class="btn btn-outline-secondary btn-lg my-2 mx-2"
+      class="btn btn-outline-info btn-lg my-2 mx-2"
       role="button"
       tag="button"
     >
