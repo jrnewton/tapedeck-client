@@ -39,6 +39,9 @@
             v-model="formPassword"
           />
         </div>
+
+        <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
+
         <button
           name="loginButton"
           class="btn btn-info btn my-2"
@@ -50,12 +53,14 @@
         <router-link
           to="/auth-create"
           name="newAccountButton"
-          class="btn btn-outline-secondary btn my-2 mx-2"
+          class="btn btn-outline-info btn my-2 mx-2"
           role="button"
           tag="button"
         >
           New Account
         </router-link>
+        <!-- prettier-ignore -->
+        <router-link to="/auth-forgot" name="forgotPasswordButton">Forgot Password</router-link>
       </fieldset>
     </form>
   </section>
@@ -110,7 +115,7 @@
         <router-link
           to="/auth-confirm"
           name="codeButton"
-          class="btn btn-outline-secondary btn my-2 mx-2"
+          class="btn btn-outline-info btn my-2 mx-2"
           role="button"
           tag="button"
         >
@@ -171,7 +176,8 @@ export default {
     return {
       formEmail: '',
       formPassword: '',
-      formConfirmationCode: ''
+      formConfirmationCode: '',
+      errorMessage: null
     };
   },
   props: ['authFlow'],
@@ -186,6 +192,7 @@ export default {
         this.$router.push('/capture');
       } catch (error) {
         console.error('login error', error);
+        this.errorMessage = error.message || 'An error has occurred';
       }
     },
     async create() {
@@ -198,6 +205,7 @@ export default {
         this.$router.push('/auth-confirm');
       } catch (error) {
         console.error('create error', error);
+        this.errorMessage = error.message || 'An error has occurred';
       }
     },
     async confirm() {
@@ -210,6 +218,7 @@ export default {
         this.$router.push('/capture');
       } catch (error) {
         console.error('confirm error', error);
+        this.errorMessage = error.message || 'An error has occurred';
       }
     }
   }
