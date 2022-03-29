@@ -40,7 +40,7 @@
           />
         </div>
 
-        <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
+        <p class="text-danger mt-3" v-if="errorMessage">{{ errorMessage }}</p>
 
         <button
           name="loginButton"
@@ -102,6 +102,9 @@
             v-model="formPassword"
           />
         </div>
+
+        <p class="text-danger mt-3" v-if="errorMessage">{{ errorMessage }}</p>
+
         <button
           name="createButton"
           class="btn btn-info btn my-2"
@@ -157,6 +160,9 @@
           autocomplete="one-time-code"
           v-model="formConfirmationCode"
         />
+
+        <p class="text-danger mt-3" v-if="errorMessage">{{ errorMessage }}</p>
+
         <button
           name="confirmButton"
           class="btn btn-info btn my-2"
@@ -189,7 +195,8 @@ export default {
           formPassword: this.formPassword
         };
         await this.$store.dispatch('login', payload);
-        this.$router.push('/capture');
+        const target = this.$route.query.next || 'capture';
+        this.$router.push(`/${target}`);
       } catch (error) {
         console.error('login error', error);
         this.errorMessage = error.message || 'An error has occurred';
@@ -215,7 +222,7 @@ export default {
           formConfirmationCode: this.formConfirmationCode
         };
         await this.$store.dispatch('confirm', payload);
-        this.$router.push('/capture');
+        this.$router.push('/');
       } catch (error) {
         console.error('confirm error', error);
         this.errorMessage = error.message || 'An error has occurred';
