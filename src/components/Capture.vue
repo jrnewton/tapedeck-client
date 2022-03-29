@@ -23,7 +23,7 @@
         </div>
         <div class="my-2">
           <label id="captureDescHelp" class="form-text text-info"
-            >Enter a short description that describes the resource.</label
+            >Enter a short description for the resource.</label
           >
           <input
             type="text"
