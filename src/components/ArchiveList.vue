@@ -17,7 +17,8 @@
       <tbody>
         <tr class="table-active" v-for="item in archiveList" :key="item.id">
           <td>
-            <a :href="item.url">{{ item.title }}</a>
+            <a :href="item.s3Url" v-if="item.s3Url">{{ item.title }}</a>
+            <span v-else>{{ item.title }}</span>
           </td>
           <td>{{ item.desc }}</td>
           <td>{{ item.status }}</td>
