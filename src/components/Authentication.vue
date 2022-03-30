@@ -20,6 +20,7 @@
             id="emailInput"
             aria-describedby="emailHelp"
             autocomplete="email"
+            required
             v-model="formEmail"
           />
         </div>
@@ -36,6 +37,7 @@
             id="passwordInput"
             aria-describedby="passwordHelp"
             autocomplete="current-password"
+            required
             v-model="formPassword"
           />
         </div>
@@ -83,6 +85,7 @@
             id="emailInput"
             aria-describedby="emailHelp"
             autocomplete="email"
+            required
             v-model="formEmail"
           />
         </div>
@@ -99,6 +102,7 @@
             id="passwordInput"
             aria-describedby="passwordHelp"
             autocomplete="new-password"
+            required
             v-model="formPassword"
           />
         </div>
@@ -145,6 +149,7 @@
           id="emailInput"
           aria-describedby="emailHelp"
           autocomplete="current-password"
+          required
           v-model="formEmail"
         />
         <label id="codeHelp" class="form-text text-info" for="codeInput"
@@ -158,6 +163,7 @@
           pattern="[0-9]*"
           aria-describedby="codeHelp"
           autocomplete="one-time-code"
+          required
           v-model="formConfirmationCode"
         />
 
